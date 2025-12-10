@@ -1,0 +1,1159 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Central Park Apartments NYC | Extended Stay Living</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts: Manrope (Principal), Playfair Display & POPPINS -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <script>
+        tailwind.config = {
+            important: true, 
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Manrope', 'sans-serif'], 
+                        display: ['Manrope', 'sans-serif'], 
+                        serif: ['Playfair Display', 'serif'],
+                        poppins: ['Poppins', 'sans-serif'], 
+                    },
+                    colors: {
+                        brand: {
+                            black: '#0F0F0F', 
+                            gold: '#00d89d', 
+                            cream: '#F5F5F2', 
+                            darkGreen: '#14261C', 
+                            surface: '#FFFFFF'
+                        }
+                    },
+                    borderRadius: {
+                        'super': '2rem', 
+                        'pill': '9999px',
+                    },
+                    boxShadow: {
+                        'soft': '0 20px 40px -10px rgba(0, 0, 0, 0.05)',
+                        'glass': '0 8px 32px 0 rgba(31, 38, 135, 0.07)',
+                    },
+                    animation: {
+                        'scroll': 'scroll 40s linear infinite',
+                    },
+                    keyframes: {
+                        scroll: {
+                            '0%': { transform: 'translateX(0)' },
+                            '100%': { transform: 'translateX(-50%)' }, 
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <style>
+        body { background-color: #F5F5F2 !important; color: #0F0F0F !important; }
+        
+        /* Animaciones de Entrada */
+        .reveal-up {
+            opacity: 0;
+            transform: translateY(30px);
+            animation: revealUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+        
+        .delay-100 { animation-delay: 0.1s; }
+        .delay-200 { animation-delay: 0.2s; }
+        .delay-300 { animation-delay: 0.3s; }
+
+        @keyframes revealUp {
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        /* Pausar animación al hover */
+        .carousel-container:hover .animate-scroll {
+            animation-play-state: paused !important;
+        }
+        
+        /* --- NAVBAR FLOTANTE (DARK GLASS) --- */
+        .nav-glass {
+            background-color: rgba(15, 15, 15, 0.4); 
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.15); 
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.15); 
+        }
+
+        .nav-scrolled .nav-glass {
+            background-color: rgba(15, 15, 15, 0.7); 
+            box-shadow: 0 10px 30px -10px rgba(0,0,0,0.3);
+            border-color: rgba(255, 255, 255, 0.1);
+        }
+
+        .nav-link {
+            position: relative;
+            font-weight: 600;
+            color: #FFFFFF !important; 
+            transition: color 0.3s ease;
+        }
+        
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 50%;
+            width: 0;
+            height: 2px;
+            background-color: #00d89d; 
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            transform: translateX(-50%);
+        }
+
+        .nav-link:hover::after {
+            width: 20px;
+        }
+
+        /* --- MEGA MENU --- */
+        .mega-menu-content {
+            transform-origin: top center;
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        
+        .mega-menu-trigger:hover .mega-menu-content {
+            opacity: 1 !important;
+            visibility: visible !important;
+            transform: translate(-50%, 0) scale(1) !important;
+        }
+
+        /* --- MEGA MENU GLASS STYLE (WHITE) --- */
+        .mega-menu-glass {
+            background-color: rgba(255, 255, 255, 0.95); 
+            backdrop-filter: blur(40px); 
+            -webkit-backdrop-filter: blur(40px);
+            border: 1px solid rgba(0, 0, 0, 0.05); 
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        }
+
+        /* --- BOTONES PREMIUM --- */
+        .btn-primary {
+            background: #00d89d; 
+            color: white;
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px -5px rgba(0, 216, 157, 0.4); 
+            filter: brightness(1.1); 
+        }
+
+        /* --- BUTTON BORDER BEAM EFFECT --- */
+        .btn-beam {
+            position: relative;
+            overflow: hidden; 
+            border-radius: 9999px; 
+            background: transparent; 
+            border: none; 
+            color: #FFFFFF; 
+            transition: transform 0.3s ease;
+            box-shadow: 0 0 15px rgba(255, 255, 255, 0.2); 
+        }
+        
+        .btn-beam::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 300%; 
+            height: 300%;
+            /* Destello Blanco */
+            background: conic-gradient(from 0deg, transparent 0%, transparent 50%, #ffffff 100%);
+            transform: translate(-50%, -50%);
+            animation: spinBeam 4s linear infinite;
+            z-index: 0;
+        }
+
+        .btn-beam::after {
+            content: '';
+            position: absolute;
+            inset: 1.5px; 
+            border-radius: 9999px;
+            background-color: #196779; 
+            z-index: 1;
+        }
+
+        .btn-beam > * {
+            position: relative;
+            z-index: 2; 
+        }
+
+        @keyframes spinBeam {
+            from { transform: translate(-50%, -50%) rotate(0deg); }
+            to { transform: translate(-50%, -50%) rotate(360deg); }
+        }
+
+        .btn-secondary {
+            background: white;
+            color: #0F0F0F;
+            border: 1px solid #E5E5E5;
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .btn-secondary:hover {
+            border-color: #0F0F0F;
+            transform: translateY(-2px);
+        }
+        
+        /* --- IMAGENES --- */
+        .img-hover-zoom {
+            transition: transform 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .group:hover .img-hover-zoom {
+            transform: scale(1.05);
+        }
+
+        /* --- TEXTO DISPLAY --- */
+        .text-balance { text-wrap: balance; }
+
+        /* --- NUEVO EFECTO DE TEXTO: NEW TEAL PALETTE --- */
+        .city-highlight {
+            position: relative;
+            display: inline-block;
+            padding-right: 0.15em; 
+        }
+        
+        .city-highlight-text {
+             background-image: linear-gradient(
+                to right,
+                #00a87a, 
+                #00d89d, 
+                #66ffcf, 
+                #00d89d, 
+                #00a87a  
+            );
+            background-size: 200% auto;
+            color: transparent;
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: tideColor 5s ease-in-out infinite alternate;
+            filter: drop-shadow(0 1px 2px rgba(0, 216, 157, 0.2));
+        }
+
+        @keyframes tideColor {
+            0% { background-position: 0% 50%; }
+            100% { background-position: 100% 50%; }
+        }
+
+    </style>
+</head>
+<body class="font-sans text-brand-black antialiased selection:bg-brand-gold selection:text-white">
+
+    <!-- NAV -->
+    <nav id="navbar" class="fixed w-full z-50 top-0 pt-8 transition-all duration-500">
+        <div class="max-w-7xl mx-auto px-4 lg:px-8">
+            
+            <!-- Unified Glass Pill Container -->
+            <div class="nav-glass rounded-full px-4 py-3 flex justify-between items-center w-full max-w-5xl mx-auto">
+                
+                <!-- Logo Section -->
+                <a href="#" class="flex items-center gap-2 group relative px-2">
+                    <!-- Logo usa font-sans (Manrope) -->
+                    <div class="w-10 h-10 bg-white text-brand-black flex items-center justify-center font-sans text-lg italic rounded-full shadow-lg transition-colors">C</div>
+                    <span class="text-display text-2xl font-bold tracking-tighter text-white">
+                        central<span class="font-light text-gray-400 group-hover:text-white transition-colors">park</span>.
+                    </span>
+                </a>
+
+                <!-- Desktop Menu Links -->
+                <div class="hidden lg:flex items-center gap-2">
+                    <a href="#" class="nav-link px-4 py-2 rounded-full text-base text-white hover:bg-white/10">Home</a>
+                    
+                    <!-- ACCOMMODATIONS MEGA MENU TRIGGER -->
+                    <div class="relative group mega-menu-trigger h-full">
+                        <a href="#suites" class="nav-link px-4 py-2 rounded-full text-base text-white hover:bg-white/10 flex items-center gap-1.5 cursor-pointer">
+                            Accommodations 
+                            <i data-lucide="chevron-down" class="w-3.5 h-3.5 opacity-70 group-hover:rotate-180 transition-transform"></i>
+                        </a>
+                        
+                        <!-- Dropdown Widget -->
+                        <div class="mega-menu-content absolute top-full left-1/2 -translate-x-1/2 pt-8 w-[800px] opacity-0 invisible transform -translate-y-4 scale-95 origin-top z-50 font-poppins">
+                            <div class="mega-menu-glass rounded-[2rem] p-8 relative overflow-hidden text-brand-black">
+                                
+                                <div class="flex justify-between items-center mb-8 border-b border-gray-100 pb-4">
+                                    <span class="text-xl font-medium font-poppins text-brand-black">Our Rooms</span>
+                                    <a href="#suites" class="text-sm font-bold text-brand-gold hover:text-brand-black transition-colors flex items-center gap-1">
+                                        See all <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                                    </a>
+                                </div>
+                                
+                                <div class="grid grid-cols-2 gap-3">
+                                    <a href="#petite" class="flex items-start gap-4 p-3 rounded-2xl hover:bg-gray-50 transition-all duration-300 group/item border border-transparent hover:border-gray-200">
+                                        <div class="w-24 h-20 rounded-xl overflow-hidden bg-gray-100 flex-shrink-0">
+                                            <img src="https://ciberfycr.com/wp-content/uploads/2025/12/506-1-NUEVA.png" class="w-full h-full object-cover group-hover/item:scale-110 transition-transform duration-500">
+                                        </div>
+                                        <div>
+                                            <h4 class="font-medium text-lg text-brand-black mb-1">Classic Petite Room</h4>
+                                            <p class="text-xs text-gray-500 mb-2 line-clamp-2">Ideal for short or extended stays. Compact space optimized with all the amenities</p>
+                                        </div>
+                                    </a>
+                                    
+                                    <a href="#economy" class="flex items-start gap-4 p-3 rounded-2xl hover:bg-gray-50 transition-all duration-300 group/item border border-transparent hover:border-gray-200">
+                                        <div class="w-24 h-20 rounded-xl overflow-hidden bg-gray-100 flex-shrink-0">
+                                            <img src="https://ciberfycr.com/wp-content/uploads/2025/12/301-6-NUEVA.png" class="w-full h-full object-cover group-hover/item:scale-110 transition-transform duration-500">
+                                        </div>
+                                        <div>
+                                            <h4 class="font-medium text-lg text-brand-black mb-1">Classic Economy Room</h4>
+                                            <p class="text-xs text-gray-500 mb-2 line-clamp-2">Designed to provide affordable, functional, and comfortable living spaces for guests</p>
+                                        </div>
+                                    </a>
+
+                                    <a href="#full" class="flex items-start gap-4 p-3 rounded-2xl hover:bg-gray-50 transition-all duration-300 group/item border border-transparent hover:border-gray-200">
+                                        <div class="w-24 h-20 rounded-xl overflow-hidden bg-gray-100 flex-shrink-0">
+                                            <img src="https://ciberfycr.com/wp-content/uploads/2025/12/312-9-NUEVA.png" class="w-full h-full object-cover group-hover/item:scale-110 transition-transform duration-500">
+                                        </div>
+                                        <div>
+                                            <h4 class="font-medium text-lg text-brand-black mb-1">Full Classic Room</h4>
+                                            <p class="text-xs text-gray-500 mb-2 line-clamp-2">Efficient layouts that maximize space, comfort, and a traditional yet practical aesthetic</p>
+                                        </div>
+                                    </a>
+
+                                    <a href="#premium" class="flex items-start gap-4 p-3 rounded-2xl hover:bg-gray-50 transition-all duration-300 group/item border border-transparent hover:border-gray-200">
+                                        <div class="w-24 h-20 rounded-xl overflow-hidden bg-gray-100 flex-shrink-0">
+                                            <img src="https://ciberfycr.com/wp-content/uploads/2025/12/114-10-NUEVA.png" class="w-full h-full object-cover group-hover/item:scale-110 transition-transform duration-500">
+                                        </div>
+                                        <div>
+                                            <h4 class="font-medium text-lg text-brand-black mb-1">Classic Premium Room</h4>
+                                            <p class="text-xs text-gray-500 mb-2 line-clamp-2">A timeless and refined living experience, ideal for those seeking more than just the basics</p>
+                                        </div>
+                                    </a>
+
+                                    <a href="#superior" class="flex items-start gap-4 p-3 rounded-2xl hover:bg-gray-50 transition-all duration-300 group/item border border-transparent hover:border-gray-200">
+                                        <div class="w-24 h-20 rounded-xl overflow-hidden bg-gray-100 flex-shrink-0">
+                                            <img src="https://ciberfycr.com/wp-content/uploads/2025/12/401-9-NUEVAS-e1740089886141.png" class="w-full h-full object-cover group-hover/item:scale-110 transition-transform duration-500">
+                                        </div>
+                                        <div>
+                                            <h4 class="font-medium text-lg text-brand-black mb-1">Superior Room</h4>
+                                            <p class="text-xs text-gray-500 mb-2 line-clamp-2">Our superior apartments offer a higher standard than standard budget rooms, while remaining affordable</p>
+                                        </div>
+                                    </a>
+
+                                    <a href="#grand" class="flex items-start gap-4 p-3 rounded-2xl hover:bg-gray-50 transition-all duration-300 group/item border border-transparent hover:border-gray-200">
+                                        <div class="w-24 h-20 rounded-xl overflow-hidden bg-gray-100 flex-shrink-0">
+                                            <img src="https://ciberfycr.com/wp-content/uploads/2025/12/403-3-1-scaled-e1740089625651.jpg" class="w-full h-full object-cover group-hover/item:scale-110 transition-transform duration-500">
+                                        </div>
+                                        <div>
+                                            <div class="flex justify-between items-center mb-1">
+                                                <h4 class="font-medium text-lg text-brand-black">The Grand Suite</h4>
+                                            </div>
+                                            <p class="text-xs text-gray-500 mb-2 line-clamp-2">Designed for those who appreciate elegance and spaciousness, this suite features an open and welcoming layout</p>
+                                        </div>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <a href="#gallery" class="nav-link px-4 py-2 rounded-full text-base text-white hover:bg-white/10">Gallery</a>
+                    <a href="#contact" class="nav-link px-4 py-2 rounded-full text-base text-white hover:bg-white/10">Contact</a>
+                </div>
+
+                <div class="hidden md:flex items-center gap-2 pr-1">
+                    <a href="tel:+12126780491" class="text-sm font-bold text-white hover:text-brand-gold transition-colors hidden xl:flex items-center gap-2 font-display tracking-tight px-4">
+                        <i data-lucide="phone" class="w-3 h-3"></i> 
+                        +1 (212) 678-0491
+                    </a>
+                    <a href="#book" class="btn-beam h-12 px-9 flex items-center text-xs font-display font-extrabold uppercase tracking-widest text-white">
+                        <span>Book Now</span>
+                    </a>
+                </div>
+                
+                <button onclick="document.getElementById('mobile-menu-alert').classList.remove('hidden')" class="lg:hidden p-2 bg-white/10 rounded-full text-white relative hover:bg-white/20 transition-colors mr-1">
+                    <i data-lucide="menu" class="w-5 h-5"></i>
+                </button>
+            </div>
+        </div>
+        
+        <div id="mobile-menu-alert" class="hidden absolute top-24 right-4 bg-brand-black text-white p-4 rounded-xl shadow-2xl w-64 reveal-up z-50">
+            <p class="text-sm font-bold mb-2">Mobile Menu</p>
+            <p class="text-xs text-gray-400 mb-3">La versión móvil del menú se implementaría aquí.</p>
+            <button onclick="document.getElementById('mobile-menu-alert').classList.add('hidden')" class="text-xs bg-white text-black px-3 py-1 rounded-md font-bold">Cerrar</button>
+        </div>
+    </nav>
+
+    <!-- HERO SECTION -->
+    <header class="relative p-[10px] w-full">
+        <div class="relative w-full min-h-[calc(100vh-20px)] rounded-[2rem] overflow-hidden shadow-2xl reveal-up group">
+            <img 
+                src="https://ciberfycr.com/wp-content/uploads/2025/12/background-main-2-e1708316165685.webp" 
+                alt="NYC Luxury Living" 
+                class="absolute inset-0 w-full h-full object-cover img-hover-zoom saturate-150 object-top"
+                loading="eager" 
+                fetchpriority="high"
+            >
+            <div class="absolute inset-0 bg-black/[0.15] bg-gradient-to-t from-black/60 to-transparent"></div>
+            
+            <div class="relative z-10 h-full flex flex-col justify-center items-center text-center px-6 py-20 min-h-[inherit] pt-48">
+                <h1 class="font-sans text-4xl md:text-7xl font-bold text-white mb-8 leading-tight tracking-tighter flex flex-col items-center">
+                    <span>Fully furnished apartments</span>
+                    <div class="flex items-baseline gap-3 mt-2">
+                        <span>for</span>
+                        <span class="relative inline-block min-w-[250px] text-left h-[1.2em] overflow-hidden align-text-bottom">
+                            <span id="dynamic-text" class="text-white inline-block tracking-tight transform transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] origin-bottom">Students</span>
+                        </span>
+                    </div>
+                </h1>
+                
+                <p class="text-lg md:text-xl text-gray-200 font-light max-w-2xl mx-auto mb-10 leading-relaxed text-balance">
+                    Our fully furnished apartments offer comfort, privacy, and all the amenities that students and professionals need to live, study, and work without complications
+                </p>
+                
+                <div class="flex flex-col sm:flex-row gap-4 justify-center items-center">
+                    <a href="#suites" class="h-14 px-10 rounded-pill text-sm font-bold uppercase tracking-widest flex items-center justify-center min-w-[180px] bg-transparent border border-white text-white hover:bg-white/10 transition-all duration-300 gap-2">
+                        View Rooms <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                    </a>
+                    <a href="#book" class="btn-primary h-14 px-10 rounded-pill text-sm font-bold uppercase tracking-widest flex items-center justify-center shadow-xl min-w-[180px] text-white">
+                        Book Now
+                    </a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- INTRO SECTION (WHY CHOOSE US) -->
+    <section class="py-32 overflow-hidden"> 
+        <div class="max-w-7xl mx-auto px-6 flex flex-col md:flex-row gap-12 items-center">
+            <div class="w-full md:w-5/12 reveal-up relative z-10">
+                <span class="text-xs font-sans font-bold uppercase tracking-[0.2em] text-brand-gold mb-4 block">Why Choose Us</span>
+                
+                <h2 class="font-sans text-5xl md:text-6xl font-bold text-brand-black mb-8 leading-[1] tracking-tight">
+                    The easiest<br>way to live<br>in New York
+                </h2>
+                
+                <p class="text-lg md:text-xl text-gray-500 font-light leading-relaxed mb-10">
+                    Finding a place to live in NYC should be exciting—not stressful. Our fully furnished apartments are designed for long-term stays that offer comfort, convenience, and complete peace of mind. No high deposits, no surprise fees, no complicated processes—just a seamless move-in experience so you can start enjoying New York from day one.
+                </p>
+                
+                <a href="#book" class="btn-primary h-14 px-10 rounded-pill text-sm font-bold uppercase tracking-widest inline-flex items-center justify-center shadow-xl min-w-[180px] text-white">
+                    Start living smarter
+                </a>
+            </div>
+            
+            <div class="w-full md:w-7/12 reveal-up delay-100 relative flex justify-center md:justify-end">
+                <div class="relative w-full max-w-xl aspect-square">
+                    <div class="absolute top-4 -right-4 w-full h-full bg-brand-gold/20 rounded-2xl rotate-3 z-0"></div>
+                    <div class="absolute -top-4 -left-4 w-full h-full bg-brand-gold/10 rounded-2xl -rotate-2 z-0"></div>
+                    <div class="relative w-full h-full rounded-2xl overflow-hidden shadow-2xl z-10">
+                        <img src="https://ciberfycr.com/wp-content/uploads/2025/12/01-768x576-1.webp" alt="Community Life" class="w-full h-full object-cover hover:scale-105 transition-transform duration-700">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SUITES SECTION (AUTOMATIC INFINITE CAROUSEL) -->
+    <section id="suites" class="py-32 bg-white rounded-t-[3rem] relative z-10">
+        <div class="max-w-full mx-auto px-6"> 
+            <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-end mb-16 gap-6">
+                <div class="max-w-xl">
+                    <span class="text-xs font-bold uppercase tracking-[0.2em] text-brand-gold mb-4 block">Our Rooms</span>
+                    <h2 class="font-sans text-5xl md:text-6xl font-bold text-brand-black leading-tight tracking-tight">Find your perfect space</h2>
+                </div>
+                <a href="#" class="btn-secondary h-12 px-8 rounded-pill text-xs font-bold uppercase tracking-widest flex items-center">See all</a>
+            </div>
+
+            <div class="carousel-container overflow-hidden w-full relative group">
+                <div class="carousel-track flex gap-8 w-max animate-scroll">
+                    
+                    <!-- --- GRUPO 1 --- -->
+
+                    <!-- 1. Classic Petite -->
+                    <div class="group/card bg-brand-cream rounded-[2rem] p-3 w-[300px] md:w-[360px] flex-shrink-0 border border-transparent hover:border-gray-100 transition-all duration-300 hover:scale-[1.02]">
+                        <div class="relative h-72 rounded-[1.5rem] overflow-hidden mb-6">
+                            <img src="https://ciberfycr.com/wp-content/uploads/2025/12/506-1-NUEVA.png" class="w-full h-full object-cover group-hover/card:scale-105 transition-transform duration-700">
+                        </div>
+                        <div class="px-3 pb-3">
+                            <div class="flex justify-between items-start mb-3">
+                                <h3 class="font-sans text-2xl font-bold text-brand-black">Classic Petite</h3>
+                            </div>
+                            <p class="text-gray-500 text-sm mb-6 line-clamp-2">Ideal for short or extended stays. Compact space optimized with all the amenities</p>
+                            <div class="flex gap-2 mb-4 flex-wrap">
+                                <span class="px-3 py-1.5 bg-white rounded-lg text-xs font-bold text-gray-500 border border-gray-100 flex items-center gap-2"><i data-lucide="bed" class="w-3 h-3"></i> Twin bed</span>
+                                <span class="px-3 py-1.5 bg-white rounded-lg text-xs font-bold text-gray-500 border border-gray-100 flex items-center gap-2"><i data-lucide="coffee" class="w-3 h-3"></i> Kitchenette</span>
+                                <span class="px-3 py-1.5 bg-white rounded-lg text-xs font-bold text-gray-500 border border-gray-100 flex items-center gap-2"><i data-lucide="bath" class="w-3 h-3"></i> Private bathroom with bathtub</span>
+                            </div>
+                            <a href="#details" class="block w-full py-3 rounded-xl bg-white text-brand-black text-xs font-bold uppercase tracking-widest text-center hover:bg-brand-black hover:text-white transition-colors shadow-sm border border-transparent hover:border-brand-black">
+                                See room details
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- 2. Classic Economy -->
+                    <div class="group/card bg-brand-cream rounded-[2rem] p-3 w-[300px] md:w-[360px] flex-shrink-0 border border-transparent hover:border-gray-100 transition-all duration-300 hover:scale-[1.02]">
+                        <div class="relative h-72 rounded-[1.5rem] overflow-hidden mb-6">
+                            <img src="https://ciberfycr.com/wp-content/uploads/2025/12/301-6-NUEVA.png" class="w-full h-full object-cover group-hover/card:scale-105 transition-transform duration-700">
+                        </div>
+                        <div class="px-3 pb-3">
+                            <div class="flex justify-between items-start mb-3">
+                                <h3 class="font-sans text-2xl font-bold text-brand-black">Classic Economy</h3>
+                            </div>
+                            <p class="text-gray-500 text-sm mb-6 line-clamp-2">Designed to provide affordable, functional, and comfortable living spaces for guests</p>
+                            <div class="flex gap-2 mb-4 flex-wrap">
+                                <span class="px-3 py-1.5 bg-white rounded-lg text-xs font-bold text-gray-500 border border-gray-100 flex items-center gap-2"><i data-lucide="bed" class="w-3 h-3"></i> Full Bed</span>
+                                <span class="px-3 py-1.5 bg-white rounded-lg text-xs font-bold text-gray-500 border border-gray-100 flex items-center gap-2"><i data-lucide="utensils" class="w-3 h-3"></i> Kitchen</span>
+                                <span class="px-3 py-1.5 bg-white rounded-lg text-xs font-bold text-gray-500 border border-gray-100 flex items-center gap-2"><i data-lucide="bath" class="w-3 h-3"></i> Private bathroom with bathtub</span>
+                            </div>
+                            <a href="#details" class="block w-full py-3 rounded-xl bg-white text-brand-black text-xs font-bold uppercase tracking-widest text-center hover:bg-brand-black hover:text-white transition-colors shadow-sm border border-transparent hover:border-brand-black">
+                                See room details
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- 3. Full Classic -->
+                    <div class="group/card bg-brand-cream rounded-[2rem] p-3 w-[300px] md:w-[360px] flex-shrink-0 border border-transparent hover:border-gray-100 transition-all duration-300 hover:scale-[1.02]">
+                        <div class="relative h-72 rounded-[1.5rem] overflow-hidden mb-6">
+                            <img src="https://ciberfycr.com/wp-content/uploads/2025/12/312-9-NUEVA.png" class="w-full h-full object-cover group-hover/card:scale-105 transition-transform duration-700">
+                        </div>
+                        <div class="px-3 pb-3">
+                            <div class="flex justify-between items-start mb-3">
+                                <h3 class="font-sans text-2xl font-bold text-brand-black">Full Classic Room</h3>
+                            </div>
+                            <p class="text-gray-500 text-sm mb-6 line-clamp-2">Efficient layouts that maximize space, comfort, and a traditional yet practical aesthetic</p>
+                            <div class="flex gap-2 mb-4 flex-wrap">
+                                <span class="px-3 py-1.5 bg-white rounded-lg text-xs font-bold text-gray-500 border border-gray-100 flex items-center gap-2"><i data-lucide="bed" class="w-3 h-3"></i> Full Bed</span>
+                                <span class="px-3 py-1.5 bg-white rounded-lg text-xs font-bold text-gray-500 border border-gray-100 flex items-center gap-2"><i data-lucide="coffee" class="w-3 h-3"></i> Kitchenette</span>
+                                <span class="px-3 py-1.5 bg-white rounded-lg text-xs font-bold text-gray-500 border border-gray-100 flex items-center gap-2"><i data-lucide="bath" class="w-3 h-3"></i> Private bathroom with bathtub</span>
+                            </div>
+                            <a href="#details" class="block w-full py-3 rounded-xl bg-white text-brand-black text-xs font-bold uppercase tracking-widest text-center hover:bg-brand-black hover:text-white transition-colors shadow-sm border border-transparent hover:border-brand-black">
+                                See room details
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- 4. Classic Premium Room -->
+                    <div class="group/card bg-brand-cream rounded-[2rem] p-3 w-[300px] md:w-[360px] flex-shrink-0 border border-transparent hover:border-gray-100 transition-all duration-300 hover:scale-[1.02]">
+                        <div class="relative h-72 rounded-[1.5rem] overflow-hidden mb-6">
+                            <img src="https://ciberfycr.com/wp-content/uploads/2025/12/114-10-NUEVA.png" class="w-full h-full object-cover group-hover/card:scale-105 transition-transform duration-700">
+                        </div>
+                        <div class="px-3 pb-3">
+                            <div class="flex justify-between items-start mb-3">
+                                <h3 class="font-sans text-2xl font-bold text-brand-black">Classic Premium</h3>
+                            </div>
+                            <p class="text-gray-500 text-sm mb-6 line-clamp-2">A timeless and refined living experience, ideal for those seeking more than just the basics</p>
+                            <div class="flex gap-2 mb-4 flex-wrap">
+                                <span class="px-3 py-1.5 bg-white rounded-lg text-xs font-bold text-gray-500 border border-gray-100 flex items-center gap-2"><i data-lucide="bed" class="w-3 h-3"></i> Queen bed</span>
+                                <span class="px-3 py-1.5 bg-white rounded-lg text-xs font-bold text-gray-500 border border-gray-100 flex items-center gap-2"><i data-lucide="utensils" class="w-3 h-3"></i> Kitchen</span>
+                                <span class="px-3 py-1.5 bg-white rounded-lg text-xs font-bold text-gray-500 border border-gray-100 flex items-center gap-2"><i data-lucide="bath" class="w-3 h-3"></i> Private bathroom with bathtub</span>
+                            </div>
+                            <a href="#details" class="block w-full py-3 rounded-xl bg-white text-brand-black text-xs font-bold uppercase tracking-widest text-center hover:bg-brand-black hover:text-white transition-colors shadow-sm border border-transparent hover:border-brand-black">
+                                See room details
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- 5. Superior Room -->
+                    <div class="group/card bg-brand-cream rounded-[2rem] p-3 w-[300px] md:w-[360px] flex-shrink-0 border border-transparent hover:border-gray-100 transition-all duration-300 hover:scale-[1.02]">
+                        <div class="relative h-72 rounded-[1.5rem] overflow-hidden mb-6">
+                            <img src="https://ciberfycr.com/wp-content/uploads/2025/12/401-9-NUEVAS-e1740089886141.png" class="w-full h-full object-cover group-hover/card:scale-105 transition-transform duration-700">
+                        </div>
+                        <div class="px-3 pb-3">
+                            <div class="flex justify-between items-start mb-3">
+                                <h3 class="font-sans text-2xl font-bold text-brand-black">Superior Room</h3>
+                            </div>
+                            <p class="text-gray-500 text-sm mb-6 line-clamp-2">Our superior apartments offer a higher standard than standard budget rooms, while remaining affordable</p>
+                            <div class="flex gap-2 mb-4 flex-wrap">
+                                <span class="px-3 py-1.5 bg-white rounded-lg text-xs font-bold text-gray-500 border border-gray-100 flex items-center gap-2"><i data-lucide="bed" class="w-3 h-3"></i> Queen bed</span>
+                                <span class="px-3 py-1.5 bg-white rounded-lg text-xs font-bold text-gray-500 border border-gray-100 flex items-center gap-2"><i data-lucide="utensils" class="w-3 h-3"></i> Kitchen</span>
+                                <span class="px-3 py-1.5 bg-white rounded-lg text-xs font-bold text-gray-500 border border-gray-100 flex items-center gap-2"><i data-lucide="bath" class="w-3 h-3"></i> Private bathroom with bathtub</span>
+                            </div>
+                            <a href="#details" class="block w-full py-3 rounded-xl bg-white text-brand-black text-xs font-bold uppercase tracking-widest text-center hover:bg-brand-black hover:text-white transition-colors shadow-sm border border-transparent hover:border-brand-black">
+                                See room details
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- 6. The Grand Premium -->
+                    <div class="group/card bg-brand-cream rounded-[2rem] p-3 w-[300px] md:w-[360px] flex-shrink-0 border border-transparent hover:border-gray-100 transition-all duration-300 hover:scale-[1.02]">
+                        <div class="relative h-72 rounded-[1.5rem] overflow-hidden mb-6">
+                            <img src="https://ciberfycr.com/wp-content/uploads/2025/12/403-3-1-scaled-e1740089625651.jpg" class="w-full h-full object-cover group-hover/card:scale-105 transition-transform duration-700">
+                        </div>
+                        <div class="px-3 pb-3">
+                            <div class="flex justify-between items-start mb-3">
+                                <h3 class="font-sans text-2xl font-bold text-brand-black">The Grand Premium</h3>
+                            </div>
+                            <p class="text-gray-500 text-sm mb-6 line-clamp-2">Designed for those who appreciate elegance and spaciousness, this suite features an open and welcoming layout</p>
+                            <div class="flex gap-2 mb-4 flex-wrap">
+                                <span class="px-3 py-1.5 bg-white rounded-lg text-xs font-bold text-gray-500 border border-gray-100 flex items-center gap-2"><i data-lucide="bed" class="w-3 h-3"></i> Queen bed</span>
+                                <span class="px-3 py-1.5 bg-white rounded-lg text-xs font-bold text-gray-500 border border-gray-100 flex items-center gap-2"><i data-lucide="utensils" class="w-3 h-3"></i> Kitchen</span>
+                                <span class="px-3 py-1.5 bg-white rounded-lg text-xs font-bold text-gray-500 border border-gray-100 flex items-center gap-2"><i data-lucide="sofa" class="w-3 h-3"></i> Living room Space</span>
+                            </div>
+                            <a href="#details" class="block w-full py-3 rounded-xl bg-white text-brand-black text-xs font-bold uppercase tracking-widest text-center hover:bg-brand-black hover:text-white transition-colors shadow-sm border border-transparent hover:border-brand-black">
+                                See room details
+                            </a>
+                        </div>
+                    </div>
+                    
+                    <!-- --- DUPLICADO PARA SCROLL INFINITO (Clones) --- -->
+
+                    <!-- 1. Classic Petite (Clon) -->
+                    <div class="group/card bg-brand-cream rounded-[2rem] p-3 w-[300px] md:w-[360px] flex-shrink-0 border border-transparent hover:border-gray-100 transition-all duration-300 hover:scale-[1.02]">
+                        <div class="relative h-72 rounded-[1.5rem] overflow-hidden mb-6">
+                            <img src="https://ciberfycr.com/wp-content/uploads/2025/12/506-1-NUEVA.png" class="w-full h-full object-cover group-hover/card:scale-105 transition-transform duration-700">
+                        </div>
+                        <div class="px-3 pb-3">
+                            <div class="flex justify-between items-start mb-3">
+                                <h3 class="font-sans text-2xl font-bold text-brand-black">Classic Petite</h3>
+                            </div>
+                            <p class="text-gray-500 text-sm mb-6 line-clamp-2">Ideal for short or extended stays. Compact space optimized with all the amenities</p>
+                            <div class="flex gap-2 mb-4 flex-wrap">
+                                <span class="px-3 py-1.5 bg-white rounded-lg text-xs font-bold text-gray-500 border border-gray-100 flex items-center gap-2"><i data-lucide="bed" class="w-3 h-3"></i> Twin bed</span>
+                                <span class="px-3 py-1.5 bg-white rounded-lg text-xs font-bold text-gray-500 border border-gray-100 flex items-center gap-2"><i data-lucide="coffee" class="w-3 h-3"></i> Kitchenette</span>
+                                <span class="px-3 py-1.5 bg-white rounded-lg text-xs font-bold text-gray-500 border border-gray-100 flex items-center gap-2"><i data-lucide="bath" class="w-3 h-3"></i> Private bathroom with bathtub</span>
+                            </div>
+                            <a href="#details" class="block w-full py-3 rounded-xl bg-white text-brand-black text-xs font-bold uppercase tracking-widest text-center hover:bg-brand-black hover:text-white transition-colors shadow-sm border border-transparent hover:border-brand-black">
+                                See room details
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- 2. Classic Economy (Clon) -->
+                    <div class="group/card bg-brand-cream rounded-[2rem] p-3 w-[300px] md:w-[360px] flex-shrink-0 border border-transparent hover:border-gray-100 transition-all duration-300 hover:scale-[1.02]">
+                        <div class="relative h-72 rounded-[1.5rem] overflow-hidden mb-6">
+                            <img src="https://ciberfycr.com/wp-content/uploads/2025/12/301-6-NUEVA.png" class="w-full h-full object-cover group-hover/card:scale-105 transition-transform duration-700">
+                        </div>
+                        <div class="px-3 pb-3">
+                            <div class="flex justify-between items-start mb-3">
+                                <h3 class="font-sans text-2xl font-bold text-brand-black">Classic Economy</h3>
+                            </div>
+                            <p class="text-gray-500 text-sm mb-6 line-clamp-2">Designed to provide affordable, functional, and comfortable living spaces for guests</p>
+                            <div class="flex gap-2 mb-4 flex-wrap">
+                                <span class="px-3 py-1.5 bg-white rounded-lg text-xs font-bold text-gray-500 border border-gray-100 flex items-center gap-2"><i data-lucide="bed" class="w-3 h-3"></i> Full Bed</span>
+                                <span class="px-3 py-1.5 bg-white rounded-lg text-xs font-bold text-gray-500 border border-gray-100 flex items-center gap-2"><i data-lucide="utensils" class="w-3 h-3"></i> Kitchen</span>
+                                <span class="px-3 py-1.5 bg-white rounded-lg text-xs font-bold text-gray-500 border border-gray-100 flex items-center gap-2"><i data-lucide="bath" class="w-3 h-3"></i> Private bathroom with bathtub</span>
+                            </div>
+                            <a href="#details" class="block w-full py-3 rounded-xl bg-white text-brand-black text-xs font-bold uppercase tracking-widest text-center hover:bg-brand-black hover:text-white transition-colors shadow-sm border border-transparent hover:border-brand-black">
+                                See room details
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- 3. Full Classic (Clon) -->
+                    <div class="group/card bg-brand-cream rounded-[2rem] p-3 w-[300px] md:w-[360px] flex-shrink-0 border border-transparent hover:border-gray-100 transition-all duration-300 hover:scale-[1.02]">
+                        <div class="relative h-72 rounded-[1.5rem] overflow-hidden mb-6">
+                            <img src="https://ciberfycr.com/wp-content/uploads/2025/12/312-9-NUEVA.png" class="w-full h-full object-cover group-hover/card:scale-105 transition-transform duration-700">
+                        </div>
+                        <div class="px-3 pb-3">
+                            <div class="flex justify-between items-start mb-3">
+                                <h3 class="font-sans text-2xl font-bold text-brand-black">Full Classic Room</h3>
+                            </div>
+                            <p class="text-gray-500 text-sm mb-6 line-clamp-2">Efficient layouts that maximize space, comfort, and a traditional yet practical aesthetic</p>
+                            <div class="flex gap-2 mb-4 flex-wrap">
+                                <span class="px-3 py-1.5 bg-white rounded-lg text-xs font-bold text-gray-500 border border-gray-100 flex items-center gap-2"><i data-lucide="bed" class="w-3 h-3"></i> Full Bed</span>
+                                <span class="px-3 py-1.5 bg-white rounded-lg text-xs font-bold text-gray-500 border border-gray-100 flex items-center gap-2"><i data-lucide="coffee" class="w-3 h-3"></i> Kitchenette</span>
+                                <span class="px-3 py-1.5 bg-white rounded-lg text-xs font-bold text-gray-500 border border-gray-100 flex items-center gap-2"><i data-lucide="bath" class="w-3 h-3"></i> Private bathroom with bathtub</span>
+                            </div>
+                            <a href="#details" class="block w-full py-3 rounded-xl bg-white text-brand-black text-xs font-bold uppercase tracking-widest text-center hover:bg-brand-black hover:text-white transition-colors shadow-sm border border-transparent hover:border-brand-black">
+                                See room details
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- 4. Classic Premium Room (Clon) -->
+                    <div class="group/card bg-brand-cream rounded-[2rem] p-3 w-[300px] md:w-[360px] flex-shrink-0 border border-transparent hover:border-gray-100 transition-all duration-300 hover:scale-[1.02]">
+                        <div class="relative h-72 rounded-[1.5rem] overflow-hidden mb-6">
+                            <img src="https://ciberfycr.com/wp-content/uploads/2025/12/114-10-NUEVA.png" class="w-full h-full object-cover group-hover/card:scale-105 transition-transform duration-700">
+                        </div>
+                        <div class="px-3 pb-3">
+                            <div class="flex justify-between items-start mb-3">
+                                <h3 class="font-sans text-2xl font-bold text-brand-black">Classic Premium</h3>
+                            </div>
+                            <p class="text-gray-500 text-sm mb-6 line-clamp-2">A timeless and refined living experience, ideal for those seeking more than just the basics</p>
+                            <div class="flex gap-2 mb-4 flex-wrap">
+                                <span class="px-3 py-1.5 bg-white rounded-lg text-xs font-bold text-gray-500 border border-gray-100 flex items-center gap-2"><i data-lucide="bed" class="w-3 h-3"></i> Queen bed</span>
+                                <span class="px-3 py-1.5 bg-white rounded-lg text-xs font-bold text-gray-500 border border-gray-100 flex items-center gap-2"><i data-lucide="utensils" class="w-3 h-3"></i> Kitchen</span>
+                                <span class="px-3 py-1.5 bg-white rounded-lg text-xs font-bold text-gray-500 border border-gray-100 flex items-center gap-2"><i data-lucide="bath" class="w-3 h-3"></i> Private bathroom with bathtub</span>
+                            </div>
+                            <a href="#details" class="block w-full py-3 rounded-xl bg-white text-brand-black text-xs font-bold uppercase tracking-widest text-center hover:bg-brand-black hover:text-white transition-colors shadow-sm border border-transparent hover:border-brand-black">
+                                See room details
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- 5. Superior Room (Clon) -->
+                    <div class="group/card bg-brand-cream rounded-[2rem] p-3 w-[300px] md:w-[360px] flex-shrink-0 border border-transparent hover:border-gray-100 transition-all duration-300 hover:scale-[1.02]">
+                        <div class="relative h-72 rounded-[1.5rem] overflow-hidden mb-6">
+                            <img src="https://ciberfycr.com/wp-content/uploads/2025/12/401-9-NUEVAS-e1740089886141.png" class="w-full h-full object-cover group-hover/card:scale-105 transition-transform duration-700">
+                        </div>
+                        <div class="px-3 pb-3">
+                            <div class="flex justify-between items-start mb-3">
+                                <h3 class="font-sans text-2xl font-bold text-brand-black">Superior Room</h3>
+                            </div>
+                            <p class="text-gray-500 text-sm mb-6 line-clamp-2">Our superior apartments offer a higher standard than standard budget rooms, while remaining affordable</p>
+                            <div class="flex gap-2 mb-4 flex-wrap">
+                                <span class="px-3 py-1.5 bg-white rounded-lg text-xs font-bold text-gray-500 border border-gray-100 flex items-center gap-2"><i data-lucide="bed" class="w-3 h-3"></i> Queen bed</span>
+                                <span class="px-3 py-1.5 bg-white rounded-lg text-xs font-bold text-gray-500 border border-gray-100 flex items-center gap-2"><i data-lucide="utensils" class="w-3 h-3"></i> Kitchen</span>
+                                <span class="px-3 py-1.5 bg-white rounded-lg text-xs font-bold text-gray-500 border border-gray-100 flex items-center gap-2"><i data-lucide="bath" class="w-3 h-3"></i> Private bathroom with bathtub</span>
+                            </div>
+                            <a href="#details" class="block w-full py-3 rounded-xl bg-white text-brand-black text-xs font-bold uppercase tracking-widest text-center hover:bg-brand-black hover:text-white transition-colors shadow-sm border border-transparent hover:border-brand-black">
+                                See room details
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- 6. The Grand Premium (Clon) -->
+                    <div class="group/card bg-brand-cream rounded-[2rem] p-3 w-[300px] md:w-[360px] flex-shrink-0 border border-transparent hover:border-gray-100 transition-all duration-300 hover:scale-[1.02]">
+                        <div class="relative h-72 rounded-[1.5rem] overflow-hidden mb-6">
+                            <img src="https://ciberfycr.com/wp-content/uploads/2025/12/403-3-1-scaled-e1740089625651.jpg" class="w-full h-full object-cover group-hover/card:scale-105 transition-transform duration-700">
+                        </div>
+                        <div class="px-3 pb-3">
+                            <div class="flex justify-between items-start mb-3">
+                                <h3 class="font-sans text-2xl font-bold text-brand-black">The Grand Premium</h3>
+                            </div>
+                            <p class="text-gray-500 text-sm mb-6 line-clamp-2">Designed for those who appreciate elegance and spaciousness, this suite features an open and welcoming layout</p>
+                            <div class="flex gap-2 mb-4 flex-wrap">
+                                <span class="px-3 py-1.5 bg-white rounded-lg text-xs font-bold text-gray-500 border border-gray-100 flex items-center gap-2"><i data-lucide="bed" class="w-3 h-3"></i> Queen bed</span>
+                                <span class="px-3 py-1.5 bg-white rounded-lg text-xs font-bold text-gray-500 border border-gray-100 flex items-center gap-2"><i data-lucide="utensils" class="w-3 h-3"></i> Kitchen</span>
+                                <span class="px-3 py-1.5 bg-white rounded-lg text-xs font-bold text-gray-500 border border-gray-100 flex items-center gap-2"><i data-lucide="sofa" class="w-3 h-3"></i> Living room Space</span>
+                            </div>
+                            <a href="#details" class="block w-full py-3 rounded-xl bg-white text-brand-black text-xs font-bold uppercase tracking-widest text-center hover:bg-brand-black hover:text-white transition-colors shadow-sm border border-transparent hover:border-brand-black">
+                                See room details
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <p class="text-center text-xs text-gray-400 mt-12 font-medium tracking-wide">Automatic carousel • Hover to pause</p>
+        </div>
+    </section>
+
+    <!-- HOW IT WORKS SECTION -->
+    <section class="relative py-32">
+        <div class="absolute inset-0 z-0">
+            <img src="https://ciberfycr.com/wp-content/uploads/2025/12/pexels-keira-burton-6146960-1-scaled.jpg" alt="Background Lifestyle" class="w-full h-full object-cover">
+            <div class="absolute inset-0 bg-brand-black/80 backdrop-blur-[2px]"></div>
+        </div>
+
+        <div class="max-w-7xl mx-auto px-6 relative z-10">
+            <h2 class="font-sans text-5xl md:text-6xl font-bold text-white mb-16 leading-tight tracking-tight">How it Works</h2>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-16">
+                
+                <!-- Step 1 -->
+                <div class="group bg-white/5 border border-white/10 rounded-3xl p-8 backdrop-blur-md hover:bg-white/10 transition-all duration-300">
+                    <div class="w-12 h-12 rounded-full bg-brand-gold text-white flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+                        <i data-lucide="layout-grid" class="w-6 h-6"></i>
+                    </div>
+                    <h3 class="font-poppins text-xl font-bold text-white mb-3">Choose your accommodation</h3>
+                    <p class="text-sm text-gray-300 leading-relaxed">
+                        Choose a space that suits your needs and lifestyle. Your perfect home, and your new beginning, start here.
+                    </p>
+                </div>
+
+                <!-- Step 2 -->
+                <div class="group bg-white/5 border border-white/10 rounded-3xl p-8 backdrop-blur-md hover:bg-white/10 transition-all duration-300">
+                    <div class="w-12 h-12 rounded-full bg-brand-gold text-white flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+                        <i data-lucide="laptop" class="w-6 h-6"></i>
+                    </div>
+                    <h3 class="font-poppins text-xl font-bold text-white mb-3">Apply online easily</h3>
+                    <p class="text-sm text-gray-300 leading-relaxed">
+                        Complete a short online form to help you confirm the ideal room for your stay in New York.
+                    </p>
+                </div>
+
+                <!-- Step 3 -->
+                <div class="group bg-white/5 border border-white/10 rounded-3xl p-8 backdrop-blur-md hover:bg-white/10 transition-all duration-300">
+                    <div class="w-12 h-12 rounded-full bg-brand-gold text-white flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+                        <i data-lucide="package" class="w-6 h-6"></i>
+                    </div>
+                    <h3 class="font-poppins text-xl font-bold text-white mb-3">Move-In</h3>
+                    <p class="text-sm text-gray-300 leading-relaxed">
+                        Arrive and settle in right away: everything is ready so all you have to do is unpack your bags.
+                    </p>
+                </div>
+
+                <!-- Step 4 -->
+                <div class="group bg-white/5 border border-white/10 rounded-3xl p-8 backdrop-blur-md hover:bg-white/10 transition-all duration-300">
+                    <div class="w-12 h-12 rounded-full bg-brand-gold text-white flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+                        <i data-lucide="heart" class="w-6 h-6"></i>
+                    </div>
+                    <h3 class="font-poppins text-xl font-bold text-white mb-3">Feel at Home</h3>
+                    <p class="text-sm text-gray-300 leading-relaxed">
+                        Enjoy a cozy place where you can concentrate, relax, and live comfortably in New York City.
+                    </p>
+                </div>
+            </div>
+
+            <div class="flex flex-col md:flex-row justify-between items-center gap-8 border-t border-white/10 pt-12">
+                <p class="text-lg text-gray-300 font-medium">
+                    If you have any questions or need support, our team is here for you!
+                </p>
+                <a href="#contact" class="btn-primary h-14 px-10 rounded-pill text-sm font-bold uppercase tracking-widest flex items-center justify-center shadow-xl min-w-[220px] text-white hover:scale-105 transition-transform">
+                    Find Your Home Today <i data-lucide="arrow-right" class="w-4 h-4 ml-2"></i>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- WHY STAY WITH US -->
+    <section id="why-stay" class="py-32 bg-white relative">
+        <div class="max-w-7xl mx-auto px-6">
+            
+            <div class="flex flex-col lg:flex-row gap-16 relative">
+                
+                <div class="lg:w-1/2 order-2 lg:order-1">
+                    <div class="sticky top-32 h-[60vh] rounded-[2.5rem] overflow-hidden shadow-2xl border border-gray-100">
+                        <img id="img-benefit-1" src="https://images.unsplash.com/photo-1554224155-6726b3ff858f?q=80&w=1000&auto=format&fit=crop" class="absolute inset-0 w-full h-full object-cover transition-all duration-700 opacity-100 scale-105" alt="Affordable">
+                        
+                        <img id="img-benefit-2" src="https://images.unsplash.com/photo-1586023492125-27b2c045efd7?q=80&w=1000&auto=format&fit=crop" class="absolute inset-0 w-full h-full object-cover transition-all duration-700 opacity-0 scale-100" alt="Comfortable">
+                        
+                        <img id="img-benefit-3" src="https://images.unsplash.com/photo-1488646953014-85cb44e25828?q=80&w=1000&auto=format&fit=crop" class="absolute inset-0 w-full h-full object-cover transition-all duration-700 opacity-0 scale-100" alt="Flexible">
+                        
+                        <img id="img-benefit-4" src="https://images.unsplash.com/photo-1511632765486-a01980e01a18?q=80&w=1000&auto=format&fit=crop" class="absolute inset-0 w-full h-full object-cover transition-all duration-700 opacity-0 scale-100" alt="Social">
+                        
+                        <div class="absolute inset-0 bg-black/10"></div>
+                    </div>
+                </div>
+
+                <div class="lg:w-1/2 order-1 lg:order-2 py-12 lg:py-0">
+                    <h2 class="font-sans text-5xl font-bold text-brand-black mb-20 leading-tight tracking-tight">
+                        Why stay <br>with us
+                    </h2>
+
+                    <div class="space-y-32 pb-32"> 
+                        
+                        <div class="benefit-item transition-all duration-500 opacity-100 translate-x-0" data-target="img-benefit-1">
+                            <span class="inline-block px-4 py-1.5 rounded-full bg-[#FFE4E6] text-[#E11D48] text-xs font-bold uppercase tracking-wider mb-6">Affordable</span>
+                            <h3 class="font-poppins text-3xl font-bold text-brand-black mb-4">Bills included</h3>
+                            <p class="text-gray-500 text-lg leading-relaxed">
+                                Affordable rent without compromising on quality. Utilities, high-speed Wi-Fi, and cleaning costs included in one transparent monthly price.
+                            </p>
+                        </div>
+
+                        <div class="benefit-item transition-all duration-500 opacity-30 translate-x-10" data-target="img-benefit-2">
+                            <span class="inline-block px-4 py-1.5 rounded-full bg-[#DCFCE7] text-[#15803D] text-xs font-bold uppercase tracking-wider mb-6">Comfortable</span>
+                            <h3 class="font-poppins text-3xl font-bold text-brand-black mb-4">Move-in ready</h3>
+                            <p class="text-gray-500 text-lg leading-relaxed">
+                                Don't move heavy furniture. All coliving spaces are fully furnished with designer touches for immediate comfort and convenience.
+                            </p>
+                        </div>
+
+                        <div class="benefit-item transition-all duration-500 opacity-30 translate-x-10" data-target="img-benefit-3">
+                            <span class="inline-block px-4 py-1.5 rounded-full bg-[#DBEAFE] text-[#1D4ED8] text-xs font-bold uppercase tracking-wider mb-6">Flexible</span>
+                            <h3 class="font-poppins text-3xl font-bold text-brand-black mb-4">Monthly stays</h3>
+                            <p class="text-gray-500 text-lg leading-relaxed">
+                                Choose your dates and we will make relocating quick and easy
+                            </p>
+                        </div>
+
+                        <div class="benefit-item transition-all duration-500 opacity-30 translate-x-10" data-target="img-benefit-4">
+                            <span class="inline-block px-4 py-1.5 rounded-full bg-[#F3E8FF] text-[#7E22CE] text-xs font-bold uppercase tracking-wider mb-6">Live Well</span>
+                            <h3 class="font-poppins text-3xl font-bold text-brand-black mb-4">Live Relaxed, Live Well</h3>
+                            <p class="text-gray-500 text-lg leading-relaxed">
+                                Live in a pleasant and safe environment, ideal for concentrating, relaxing, and feeling at ease.
+                            </p>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- BENTO GRID AMENITIES -->
+    <section id="amenities" class="py-32 bg-brand-black text-white rounded-t-[3rem] relative -mt-10 z-0">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="mb-16 text-center max-w-3xl mx-auto">
+                <span class="text-xs font-bold tracking-widest text-white/50 uppercase mb-4 block">All Included</span>
+                <h2 class="font-sans text-5xl md:text-6xl font-bold mb-6 leading-tight tracking-tight">Designed for modern life</h2>
+                <p class="text-white/60 text-lg font-light">Forget about setting up utilities. Your rent includes everything so you can start living from minute one.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                
+                <div class="md:col-span-2 md:row-span-2 p-8 bg-white/5 rounded-[2rem] border border-white/10 hover:border-brand-gold/50 transition-colors group flex flex-col justify-between h-full min-h-[300px]">
+                    <div class="relative z-10">
+                        <div class="bg-white/10 w-14 h-14 rounded-2xl flex items-center justify-center mb-6 text-brand-gold group-hover:scale-110 transition-transform">
+                            <i data-lucide="wifi" class="w-8 h-8"></i>
+                        </div>
+                        <h3 class="font-sans text-3xl font-bold mb-2">High-Speed wifi ready <br> for work or streaming</h3>
+                        <p class="text-white/60 text-base max-w-sm">High-Speed wifi ready for work or streaming</p>
+                    </div>
+                </div>
+
+                <div class="p-6 bg-white/5 rounded-[2rem] border border-white/10 hover:border-brand-gold/50 transition-colors group flex flex-col justify-center items-center text-center h-full min-h-[200px]">
+                    <div class="bg-white/10 p-3 rounded-full mb-4 group-hover:scale-110 transition-transform">
+                        <i data-lucide="thermometer" class="w-6 h-6 text-brand-gold"></i>
+                    </div>
+                    <h3 class="font-sans text-lg font-bold mb-1">AC and Heating</h3>
+                    <p class="text-xs text-white/50">As well as all utilities included</p>
+                </div>
+
+                <div class="p-6 bg-white/5 rounded-[2rem] border border-white/10 hover:border-brand-gold/50 transition-colors group flex flex-col justify-center items-center text-center h-full min-h-[200px]">
+                    <div class="bg-white/10 p-3 rounded-full mb-4 group-hover:scale-110 transition-transform">
+                        <i data-lucide="tv" class="w-6 h-6 text-brand-gold"></i>
+                    </div>
+                    <h3 class="font-sans text-lg font-bold mb-1">Cable TV</h3>
+                    <p class="text-xs text-white/50">Enjoy your favorite TV programs</p>
+                </div>
+
+                <div class="p-6 bg-white/5 rounded-[2rem] border border-white/10 hover:border-brand-gold/50 transition-colors group flex flex-col justify-center items-center text-center h-full min-h-[200px]">
+                    <div class="bg-white/10 p-3 rounded-full mb-4 group-hover:scale-110 transition-transform">
+                        <i data-lucide="shirt" class="w-6 h-6 text-brand-gold"></i>
+                    </div>
+                    <h3 class="font-sans text-lg font-bold mb-1">Laundry Room</h3>
+                    <p class="text-xs text-white/50">Pay for use facility</p>
+                </div>
+
+                <div class="p-6 bg-white/5 rounded-[2rem] border border-white/10 hover:border-brand-gold/50 transition-colors group flex flex-col justify-center items-center text-center h-full min-h-[200px]">
+                    <div class="bg-white/10 p-3 rounded-full mb-4 group-hover:scale-110 transition-transform">
+                        <i data-lucide="hammer" class="w-6 h-6 text-brand-gold"></i>
+                    </div>
+                    <h3 class="font-sans text-lg font-bold mb-1">Handyman onsite</h3>
+                    <p class="text-xs text-white/50">Quick fixes, just a click away</p>
+                </div>
+
+                <div class="md:col-span-2 p-8 bg-white/5 rounded-[2rem] border border-white/10 hover:border-brand-gold/50 transition-colors group flex items-center justify-between relative overflow-hidden h-full min-h-[200px]">
+                    <div class="relative z-10 max-w-xs">
+                        <div class="bg-white/10 w-12 h-12 rounded-full flex items-center justify-center mb-4 text-brand-gold">
+                            <i data-lucide="chef-hat" class="w-6 h-6"></i>
+                        </div>
+                        <h3 class="font-sans text-2xl font-bold mb-1">Kitchen / Kitchenette</h3>
+                        <p class="text-white/60 text-sm">Equipped with kitchen appliances.</p>
+                    </div>
+                    <i data-lucide="utensils" class="w-24 h-24 text-white/5 absolute -right-4 -bottom-4 rotate-12"></i>
+                </div>
+
+                <div class="md:col-span-2 p-8 bg-white/5 rounded-[2rem] border border-white/10 hover:border-brand-gold/50 transition-colors group flex items-center justify-between relative overflow-hidden h-full min-h-[200px]">
+                    <div class="relative z-10 max-w-md">
+                         <div class="bg-white/10 w-12 h-12 rounded-full flex items-center justify-center mb-4 text-brand-gold">
+                            <i data-lucide="shield-check" class="w-6 h-6"></i>
+                        </div>
+                        <h3 class="font-sans text-2xl font-bold mb-1">24/7 Camera Surveillance</h3>
+                        <p class="text-white/60 text-sm">We focus on making your stay comfortable and safe.</p>
+                    </div>
+                </div>
+
+                <div class="md:col-span-2 p-8 bg-white/5 rounded-[2rem] border border-white/10 hover:border-brand-gold/50 transition-colors group flex items-center justify-between relative overflow-hidden h-full min-h-[200px]">
+                    <div class="relative z-10">
+                        <div class="bg-white/10 w-12 h-12 rounded-full flex items-center justify-center mb-4 text-brand-gold">
+                            <i data-lucide="bath" class="w-6 h-6"></i>
+                        </div>
+                        <h3 class="font-sans text-2xl font-bold mb-1">Private bathrooms</h3>
+                        <p class="text-white/60 text-sm">Included in all our rooms</p>
+                    </div>
+                    <i data-lucide="shower-head" class="w-24 h-24 text-white/5 absolute -right-4 -bottom-4 rotate-12"></i>
+                </div>
+
+                <div class="md:col-span-2 p-8 bg-white/5 rounded-[2rem] border border-white/10 hover:border-brand-gold/50 transition-colors group flex items-center justify-between relative overflow-hidden h-full min-h-[200px]">
+                    <div class="relative z-10">
+                        <div class="bg-white/10 w-12 h-12 rounded-full flex items-center justify-center mb-4 text-brand-gold">
+                            <i data-lucide="sparkles" class="w-6 h-6"></i>
+                        </div>
+                        <h3 class="font-sans text-2xl font-bold mb-1">Weekly cleaning</h3>
+                        <p class="text-white/60 text-sm">Fresh towels and linens provided</p>
+                    </div>
+                     <i data-lucide="spray-can" class="w-24 h-24 text-white/5 absolute -right-4 -bottom-4 rotate-12"></i>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- LOCATION -->
+    <section id="location" class="py-32">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="flex flex-col lg:flex-row gap-8 h-[600px]">
+                <div class="w-full lg:w-1/2 rounded-[2rem] overflow-hidden shadow-2xl relative border-4 border-white">
+                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3020.963496054817!2d-73.9622543242691!3d40.79606833314959!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89c2f619097e3a35%3A0x67341255e7178a99!2s19%20W%20103rd%20St%2C%20New%20York%2C%20NY%2010025%2C%20USA!5e0!3m2!1sen!2ses!4v1714498000000!5m2!1sen!2ses" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+                </div>
+                <div class="w-full lg:w-1/2 bg-white rounded-[2rem] p-12 lg:p-20 flex flex-col justify-center shadow-soft border border-gray-50 relative overflow-hidden">
+                    
+                    <div class="relative z-10">
+                        <span class="text-xs font-bold tracking-widest text-gray-400 uppercase mb-4 block">The Neighborhood</span>
+                        <h2 class="text-display text-5xl md:text-6xl mb-8 text-brand-black font-bold tracking-tight">Upper West Side</h2>
+                        
+                        <p class="text-gray-500 mb-10 font-light leading-relaxed text-lg">
+                            A prime location at 19 West 103rd Street. 
+                            Escape the chaos of Midtown and enjoy authentic New York living with tree-lined streets, 
+                            historic cafes, and of course, Central Park as your backyard.
+                        </p>
+                        
+                        <div class="space-y-6">
+                            <div class="flex items-center gap-4 group cursor-default">
+                                <div class="w-12 h-12 rounded-2xl bg-brand-cream flex items-center justify-center text-brand-black group-hover:bg-brand-black group-hover:text-white transition-colors">
+                                    <i data-lucide="map-pin" class="w-5 h-5"></i>
+                                </div> 
+                                <span class="text-sm font-bold text-brand-black">1 Block to Central Park</span>
+                            </div>
+                            <div class="flex items-center gap-4 group cursor-default">
+                                <div class="w-12 h-12 rounded-2xl bg-brand-cream flex items-center justify-center text-brand-black group-hover:bg-brand-black group-hover:text-white transition-colors">
+                                    <i data-lucide="train" class="w-5 h-5"></i>
+                                </div>
+                                <span class="text-sm font-bold text-brand-black">Subway Lines B and C (2 min)</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer id="contact" class="bg-white border-t border-gray-100 pt-24 pb-12">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="flex flex-col lg:flex-row justify-between items-start gap-16 mb-20">
+                <div class="max-w-sm">
+                    <a href="#" class="flex items-center gap-2 group mb-6">
+                        <div class="w-10 h-10 bg-brand-black text-white flex items-center justify-center font-sans text-xl italic rounded-xl">C</div>
+                        <span class="text-display text-2xl font-bold tracking-tighter text-brand-black">
+                            central<span class="font-light">park</span>.
+                        </span>
+                    </a>
+                    <p class="text-gray-500 text-sm leading-relaxed mb-8">
+                        Redefiniendo el concepto de "Extended Stay" en Nueva York. Accessible choose your dates and we will make relocating quick and easy, total comfort, and the best location in Manhattan
+                    </p>
+                    <div class="flex gap-4">
+                        <a href="#" class="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center hover:bg-brand-black hover:text-white transition-all"><i data-lucide="instagram" class="w-4 h-4"></i></a>
+                        <a href="#" class="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center hover:bg-brand-black hover:text-white transition-all"><i data-lucide="facebook" class="w-4 h-4"></i></a>
+                        <a href="#" class="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center hover:bg-brand-black hover:text-white transition-all"><i data-lucide="mail" class="w-4 h-4"></i></a>
+                    </div>
+                </div>
+                
+                <div class="grid grid-cols-2 md:grid-cols-3 gap-16 lg:gap-24">
+                    <div>
+                        <h4 class="text-xs font-bold uppercase tracking-widest mb-8 text-brand-black">Contact</h4>
+                        <ul class="space-y-4 text-sm text-gray-500 font-medium">
+                            <li>19 West 103rd Street,<br>New York, NY 10025</li>
+                            <li><a href="tel:+12126780491" class="hover:text-brand-black transition-colors">+1 (212) 678-0491</a></li>
+                            <li><a href="mailto:info@centralparkinn.com" class="hover:text-brand-black transition-colors">info@centralparkinn.com</a></li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 class="text-xs font-bold uppercase tracking-widest mb-8 text-brand-black">Links</h4>
+                        <ul class="space-y-4 text-sm text-gray-500 font-medium">
+                            <li><a href="#" class="hover:text-brand-black transition-colors">Home</a></li>
+                            <li><a href="#suites" class="hover:text-brand-black transition-colors">Accommodations</a></li>
+                            <li><a href="#gallery" class="hover:text-brand-black transition-colors">Gallery</a></li>
+                            <li><a href="#contact" class="hover:text-brand-black transition-colors">Contact</a></li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 class="text-xs font-bold uppercase tracking-widest mb-8 text-brand-black">Legal</h4>
+                        <ul class="space-y-4 text-sm text-gray-500 font-medium">
+                            <li><a href="#" class="hover:text-brand-black transition-colors">Terms</a></li>
+                            <li><a href="#" class="hover:text-brand-black transition-colors">Privacy</a></li>
+                            <li><a href="#" class="hover:text-brand-black transition-colors">Cookies</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-100 pt-8 flex flex-col md:flex-row justify-between items-center text-xs text-gray-400 font-medium gap-4">
+                <p>&copy; 2024 Central Park Apartments NYC. All rights reserved.</p>
+                <div class="flex gap-6">
+                    <span class="text-gray-400">Designed by Ciberfy Development</span>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Init Lucide Icons & Navbar Logic -->
+    <script>
+        // Init Icons
+        lucide.createIcons();
+
+        // Navbar Scroll Logic
+        const navbar = document.getElementById('navbar');
+        
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                navbar.classList.add('nav-scrolled');
+            } else {
+                navbar.classList.remove('nav-scrolled');
+            }
+        });
+
+        // --- 1. Hero Text Animation Logic ---
+        const words = ["Students", "Professionals", "Workers"];
+        let currentWordIndex = 0;
+        const dynamicTextElement = document.getElementById('dynamic-text');
+
+        if(dynamicTextElement) {
+            setInterval(() => {
+                dynamicTextElement.style.opacity = '0';
+                dynamicTextElement.style.transform = 'translateY(-50px)'; 
+                dynamicTextElement.style.filter = 'blur(8px)'; 
+
+                setTimeout(() => {
+                    currentWordIndex = (currentWordIndex + 1) % words.length;
+                    dynamicTextElement.innerText = words[currentWordIndex];
+                    
+                    dynamicTextElement.style.transition = 'none'; 
+                    dynamicTextElement.style.transform = 'translateY(50px)'; 
+                    dynamicTextElement.style.filter = 'blur(8px)'; 
+                    
+                    void dynamicTextElement.offsetWidth; 
+
+                    dynamicTextElement.style.transition = 'all 0.8s cubic-bezier(0.2, 1, 0.3, 1)'; 
+                    dynamicTextElement.style.opacity = '1';
+                    dynamicTextElement.style.transform = 'translateY(0)'; 
+                    dynamicTextElement.style.filter = 'blur(0px)'; 
+                }, 400); 
+            }, 3000);
+        }
+
+        // --- 2. Scroll-Triggered Animation for "Why Stay With Us" ---
+        document.addEventListener('DOMContentLoaded', () => {
+            const benefits = document.querySelectorAll('.benefit-item');
+            
+            const observerOptions = {
+                root: null,
+                rootMargin: '-40% 0px -40% 0px', // Activa cuando el elemento está en el centro (aprox)
+                threshold: 0
+            };
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        // 1. Activar texto
+                        // Resetear todos a inactivo
+                        benefits.forEach(b => {
+                            b.classList.remove('opacity-100', 'translate-x-0');
+                            b.classList.add('opacity-30', 'translate-x-10');
+                        });
+                        
+                        // Activar el actual
+                        entry.target.classList.remove('opacity-30', 'translate-x-10');
+                        entry.target.classList.add('opacity-100', 'translate-x-0');
+
+                        // 2. Cambiar Imagen
+                        const targetId = entry.target.getAttribute('data-target');
+                        const allImages = document.querySelectorAll('[id^="img-benefit-"]');
+                        
+                        allImages.forEach(img => {
+                            if(img.id === targetId) {
+                                img.classList.remove('opacity-0', 'scale-100');
+                                img.classList.add('opacity-100', 'scale-105'); // Fade in + Zoom suave
+                            } else {
+                                img.classList.remove('opacity-100', 'scale-105');
+                                img.classList.add('opacity-0', 'scale-100'); // Fade out
+                            }
+                        });
+                    }
+                });
+            }, observerOptions);
+
+            benefits.forEach(benefit => {
+                observer.observe(benefit);
+            });
+        });
+    </script>
+</body>
+</html>
