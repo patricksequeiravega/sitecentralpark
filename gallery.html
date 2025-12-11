@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gallery | Central Park Apartments NYC</title>
     
-    <!-- Tailwind CSS -->
+    <!-- Tailwind CSS (CDN restored) -->
     <script src="https://cdn.tailwindcss.com"></script>
     
     <!-- Google Fonts: Manrope (Main), Playfair Display & POPPINS -->
@@ -16,6 +16,7 @@
     <!-- Lucide Icons -->
     <script src="https://unpkg.com/lucide@latest"></script>
 
+    <!-- Tailwind Configuration (Restored) -->
     <script>
         tailwind.config = {
             important: true, 
@@ -24,7 +25,7 @@
                     fontFamily: {
                         sans: ['Manrope', 'sans-serif'], 
                         display: ['Manrope', 'sans-serif'], 
-                        serif: ['Playfair Display', 'serif'],
+                        serif: ['Manrope', 'sans-serif'], /* Kept as Manrope per previous request */
                         poppins: ['Poppins', 'sans-serif'], 
                     },
                     colors: {
@@ -318,9 +319,10 @@
                         </div>
                     </div>
 
-                    <!-- Gallery Link Active -->
-                    <a href="gallery.html" class="nav-link px-4 py-2 rounded-full text-base text-white hover:bg-white/10 active">Gallery</a>
-                    <a href="contact.html" class="nav-link px-4 py-2 rounded-full text-base text-brand-gold hover:bg-white/10">Contact</a>
+                    <!-- Gallery Link Active: Now GREEN (Brand Gold) -->
+                    <a href="gallery.html" class="nav-link px-4 py-2 rounded-full text-base text-brand-gold hover:bg-white/10 active">Gallery</a>
+                    <!-- Contact Link Inactive: Now WHITE -->
+                    <a href="contact.html" class="nav-link px-4 py-2 rounded-full text-base text-white hover:bg-white/10">Contact</a>
                 </div>
 
                 <div class="hidden md:flex items-center gap-2 pr-1">
@@ -368,9 +370,11 @@
             
             <div class="relative z-10 h-full flex flex-col justify-center items-center text-center px-6 pt-16">
                 <span class="text-brand-gold text-sm font-bold tracking-[0.3em] uppercase mb-4 animate-fade-in">Discover Your New Home</span>
-                <h1 class="font-serif italic font-medium text-6xl md:text-7xl text-white mb-6 animate-fade-in" style="animation-delay: 0.1s;">Gallery</h1>
-                <p class="text-white/80 text-lg max-w-xl font-light animate-fade-in tracking-wide" style="animation-delay: 0.2s;">
-                    MAKE YOUR STAY IN NEW YORK UNFORGETTABLE
+                <!-- Removed 'italic' and added 'tracking-tight' -->
+                <h1 class="font-serif font-medium text-6xl md:text-7xl text-white mb-6 animate-fade-in tracking-tight" style="animation-delay: 0.1s;">Gallery</h1>
+                <!-- Changed to Sentence case and explicitly Manrope (font-sans) -->
+                <p class="text-white/80 text-lg max-w-xl font-sans font-light animate-fade-in tracking-wide" style="animation-delay: 0.2s;">
+                    Make your stay in New York unforgettable
                 </p>
             </div>
         </div>
@@ -382,7 +386,8 @@
             <button class="filter-btn active rounded-full px-6 py-2.5 text-sm font-bold uppercase tracking-wider" data-filter="all">All Photos</button>
             <button class="filter-btn rounded-full px-6 py-2.5 text-sm font-bold uppercase tracking-wider" data-filter="rooms">Rooms</button>
             <button class="filter-btn rounded-full px-6 py-2.5 text-sm font-bold uppercase tracking-wider" data-filter="common">Common Areas</button>
-            <button class="filter-btn rounded-full px-6 py-2.5 text-sm font-bold uppercase tracking-wider" data-filter="neighborhood">Neighborhood</button>
+            <!-- Changed "Neighborhood" to "Hotel" -->
+            <button class="filter-btn rounded-full px-6 py-2.5 text-sm font-bold uppercase tracking-wider" data-filter="hotel">Hotel</button>
         </div>
     </section>
 
@@ -459,20 +464,21 @@
                     </div>
                 </div>
 
-                <!-- Neighborhood -->
-                <div class="gallery-item group" data-category="neighborhood" onclick="openLightbox(this)">
+                <!-- Hotel Category (Formerly Neighborhood) -->
+                <!-- Updated data-category to "hotel" and overlay text -->
+                <div class="gallery-item group" data-category="hotel" onclick="openLightbox(this)">
                     <img src="https://images.pexels.com/photos/1770775/pexels-photo-1770775.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2" alt="Central Park" class="w-full h-auto object-cover transition-transform duration-700 ease-in-out">
                     <div class="gallery-overlay absolute inset-0 flex flex-col justify-end p-6">
-                        <span class="text-brand-gold text-xs font-bold uppercase tracking-widest mb-1">Location</span>
-                        <h3 class="text-white text-xl font-serif">Central Park</h3>
+                        <span class="text-brand-gold text-xs font-bold uppercase tracking-widest mb-1">Hotel</span>
+                        <h3 class="text-white text-xl font-serif">Central Park View</h3>
                     </div>
                 </div>
 
-                 <div class="gallery-item group" data-category="neighborhood" onclick="openLightbox(this)">
+                 <div class="gallery-item group" data-category="hotel" onclick="openLightbox(this)">
                     <img src="https://images.pexels.com/photos/466685/pexels-photo-466685.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2" alt="NYC Streets" class="w-full h-auto object-cover transition-transform duration-700 ease-in-out">
                     <div class="gallery-overlay absolute inset-0 flex flex-col justify-end p-6">
-                        <span class="text-brand-gold text-xs font-bold uppercase tracking-widest mb-1">Location</span>
-                        <h3 class="text-white text-xl font-serif">NYC Life</h3>
+                        <span class="text-brand-gold text-xs font-bold uppercase tracking-widest mb-1">Hotel</span>
+                        <h3 class="text-white text-xl font-serif">Street View</h3>
                     </div>
                 </div>
 
