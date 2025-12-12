@@ -1,0 +1,687 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Accommodations | Central Park Apartments NYC</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts: Manrope (Main), Playfair Display & POPPINS -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <!-- Tailwind Configuration -->
+    <script>
+        tailwind.config = {
+            important: true, 
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Manrope', 'sans-serif'], 
+                        display: ['Manrope', 'sans-serif'], 
+                        serif: ['Manrope', 'sans-serif'], 
+                        poppins: ['Poppins', 'sans-serif'], 
+                    },
+                    colors: {
+                        brand: {
+                            black: '#0F0F0F', 
+                            gold: '#00d89d',  /* Teal/Green Brand Color */
+                            cream: '#F5F5F2', 
+                            darkGreen: '#14261C', 
+                            surface: '#FFFFFF',
+                            gray: '#9CA3AF'
+                        }
+                    },
+                    borderRadius: {
+                        'super': '2rem', 
+                        'pill': '9999px',
+                        'card': '1.5rem'
+                    },
+                    boxShadow: {
+                        'soft': '0 20px 40px -10px rgba(0, 0, 0, 0.05)',
+                        'glass': '0 8px 32px 0 rgba(31, 38, 135, 0.07)',
+                        'hover': '0 30px 60px -15px rgba(0, 0, 0, 0.1)',
+                    },
+                    animation: {
+                        'fade-in': 'fadeIn 0.6s ease-out forwards',
+                        'slide-up': 'slideUp 0.6s ease-out forwards',
+                    },
+                    keyframes: {
+                        fadeIn: {
+                            '0%': { opacity: '0' },
+                            '100%': { opacity: '1' },
+                        },
+                        slideUp: {
+                            '0%': { opacity: '0', transform: 'translateY(20px)' },
+                            '100%': { opacity: '1', transform: 'translateY(0)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <style>
+        body { background-color: #F5F5F2 !important; color: #0F0F0F !important; }
+        
+        /* --- NAVBAR FLOTANTE (DARK GLASS) --- */
+        .nav-glass {
+            background-color: rgba(15, 15, 15, 0.4); 
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.15); 
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.15); 
+        }
+
+        .nav-scrolled .nav-glass {
+            background-color: rgba(15, 15, 15, 0.7); 
+            box-shadow: 0 10px 30px -10px rgba(0,0,0,0.3);
+            border-color: rgba(255, 255, 255, 0.1);
+        }
+
+        .nav-link {
+            position: relative;
+            font-weight: 600;
+            color: #FFFFFF !important; 
+            transition: color 0.3s ease;
+        }
+        
+        .nav-link.active::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 50%;
+            width: 20px; 
+            height: 2px;
+            background-color: #00d89d; 
+            transform: translateX(-50%);
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 50%;
+            width: 0;
+            height: 2px;
+            background-color: #00d89d; 
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            transform: translateX(-50%);
+        }
+
+        .nav-link:hover::after {
+            width: 20px;
+        }
+
+        /* --- MEGA MENU --- */
+        .mega-menu-content {
+            transform-origin: top center;
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        
+        .mega-menu-trigger:hover .mega-menu-content {
+            opacity: 1 !important;
+            visibility: visible !important;
+            transform: translate(-50%, 0) scale(1) !important;
+        }
+
+        .mega-menu-glass {
+            background-color: rgba(255, 255, 255, 0.95); 
+            backdrop-filter: blur(40px); 
+            -webkit-backdrop-filter: blur(40px);
+            border: 1px solid rgba(0, 0, 0, 0.05); 
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        }
+
+        /* --- BUTTONS --- */
+        .btn-primary {
+            background-color: #00d89d !important; 
+            color: white;
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            border: 1px solid transparent;
+        }
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            background-color: #00c48f !important;
+            box-shadow: 0 10px 20px -5px rgba(0, 216, 157, 0.4); 
+            filter: brightness(1.1); 
+            border-color: transparent;
+        }
+
+        /* --- ROOM CARDS --- */
+        .room-card {
+            background: #FFFFFF;
+            border-radius: 1.5rem;
+            overflow: hidden;
+            transition: all 0.4s ease;
+            box-shadow: 0 10px 30px -10px rgba(0,0,0,0.05);
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+
+        .room-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px -10px rgba(0,0,0,0.1);
+        }
+
+        .room-image-container {
+            overflow: hidden;
+            position: relative;
+            height: 280px;
+        }
+
+        .room-image-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .room-card:hover .room-image-container img {
+            transform: scale(1.08);
+        }
+        
+        .amenity-icon {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background-color: #F9FAFB;
+            color: #9CA3AF; /* Light Gray default */
+            transition: all 0.3s ease;
+        }
+        
+        .room-card:hover .amenity-icon {
+            background-color: #ecfdf5; /* green-50 */
+            color: #00d89d;
+        }
+
+        /* Mobile Menu */
+        #mobile-menu {
+            transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.5s ease;
+        }
+        #mobile-menu.hidden-menu {
+            transform: translateY(-100%);
+            opacity: 0;
+            pointer-events: none;
+        }
+        #mobile-menu.visible-menu {
+            transform: translateY(0);
+            opacity: 1;
+            pointer-events: auto;
+        }
+        
+        /* Custom Scrollbar for Features */
+        .features-scroll::-webkit-scrollbar {
+            height: 4px;
+        }
+        .features-scroll::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+        .features-scroll::-webkit-scrollbar-thumb {
+            background: #d1d5db; 
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body class="font-sans text-brand-black antialiased selection:bg-brand-gold selection:text-white">
+
+    <!-- NAV (Container widened to 1400px) -->
+    <nav id="navbar" class="fixed w-full z-50 top-0 pt-8 transition-all duration-500">
+        <div class="max-w-[1400px] mx-auto px-4 lg:px-8">
+            <div class="nav-glass rounded-full px-4 py-3 flex justify-between items-center w-full max-w-5xl mx-auto relative z-50">
+                <!-- Logo -->
+                <a href="index.html" class="flex items-center gap-2 group relative px-2">
+                    <div class="w-10 h-10 bg-white text-brand-black flex items-center justify-center font-sans text-lg italic rounded-full shadow-lg transition-colors">C</div>
+                    <span class="text-display text-2xl font-bold tracking-tighter text-white">
+                        central<span class="font-light text-gray-400 group-hover:text-white transition-colors">park</span>.
+                    </span>
+                </a>
+
+                <!-- Desktop Menu -->
+                <div class="hidden lg:flex items-center gap-2">
+                    <a href="index.html" class="nav-link px-4 py-2 rounded-full text-base text-white hover:bg-white/10">Home</a>
+                    <!-- Accommodations Link Active with FULL MEGA MENU -->
+                    <div class="relative group mega-menu-trigger h-full">
+                        <a href="gallery.html" class="nav-link active px-4 py-2 rounded-full text-base text-brand-gold hover:bg-white/10 flex items-center gap-1.5 cursor-pointer">
+                            Accommodations 
+                            <i data-lucide="chevron-down" class="w-3.5 h-3.5 opacity-70 group-hover:rotate-180 transition-transform"></i>
+                        </a>
+                        <!-- Dropdown -->
+                        <div class="mega-menu-content absolute top-full left-1/2 -translate-x-1/2 pt-8 w-[800px] opacity-0 invisible transform -translate-y-4 scale-95 origin-top z-50 font-poppins">
+                            <div class="mega-menu-glass rounded-[2rem] p-8 relative overflow-hidden text-brand-black">
+                                <div class="flex justify-between items-center mb-8 border-b border-gray-100 pb-4">
+                                    <span class="text-xl font-medium font-poppins text-brand-black">Our Rooms</span>
+                                    <a href="#" class="text-sm font-bold text-brand-gold hover:text-brand-black transition-colors flex items-center gap-1">
+                                        See all <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                                    </a>
+                                </div>
+                                <div class="grid grid-cols-2 gap-3">
+                                    <!-- 1. Classic Petite -->
+                                    <a href="gallery.html" class="flex items-start gap-4 p-3 rounded-2xl hover:bg-gray-50 transition-all duration-300 group/item border border-transparent hover:border-gray-200">
+                                        <div class="w-24 h-20 rounded-xl overflow-hidden bg-gray-100 flex-shrink-0">
+                                            <img src="https://ciberfycr.com/wp-content/uploads/2025/12/506-1-NUEVA.png" class="w-full h-full object-cover group-hover/item:scale-110 transition-transform duration-500" onerror="this.src='https://images.pexels.com/photos/271624/pexels-photo-271624.jpeg?auto=compress&cs=tinysrgb&w=150'">
+                                        </div>
+                                        <div>
+                                            <h4 class="font-medium text-lg text-brand-black mb-1">Classic Petite Room</h4>
+                                            <p class="text-xs text-gray-500 mb-2 line-clamp-2">Ideal for short or extended stays.</p>
+                                        </div>
+                                    </a>
+                                    <!-- 2. Classic Economy -->
+                                    <a href="gallery.html" class="flex items-start gap-4 p-3 rounded-2xl hover:bg-gray-50 transition-all duration-300 group/item border border-transparent hover:border-gray-200">
+                                        <div class="w-24 h-20 rounded-xl overflow-hidden bg-gray-100 flex-shrink-0">
+                                            <img src="https://ciberfycr.com/wp-content/uploads/2025/12/301-6-NUEVA.png" class="w-full h-full object-cover group-hover/item:scale-110 transition-transform duration-500" onerror="this.src='https://images.pexels.com/photos/271618/pexels-photo-271618.jpeg?auto=compress&cs=tinysrgb&w=150'">
+                                        </div>
+                                        <div>
+                                            <h4 class="font-medium text-lg text-brand-black mb-1">Classic Economy Room</h4>
+                                            <p class="text-xs text-gray-500 mb-2 line-clamp-2">Affordable, functional, and comfortable.</p>
+                                        </div>
+                                    </a>
+                                    <!-- 3. Full Classic -->
+                                    <a href="gallery.html" class="flex items-start gap-4 p-3 rounded-2xl hover:bg-gray-50 transition-all duration-300 group/item border border-transparent hover:border-gray-200">
+                                        <div class="w-24 h-20 rounded-xl overflow-hidden bg-gray-100 flex-shrink-0">
+                                            <img src="https://ciberfycr.com/wp-content/uploads/2025/12/312-9-NUEVA.png" class="w-full h-full object-cover group-hover/item:scale-110 transition-transform duration-500" onerror="this.src='https://images.pexels.com/photos/279746/pexels-photo-279746.jpeg?auto=compress&cs=tinysrgb&w=150'">
+                                        </div>
+                                        <div>
+                                            <h4 class="font-medium text-lg text-brand-black mb-1">Full Classic Room</h4>
+                                            <p class="text-xs text-gray-500 mb-2 line-clamp-2">Efficient layouts that maximize space.</p>
+                                        </div>
+                                    </a>
+                                    <!-- 4. Classic Premium -->
+                                    <a href="gallery.html" class="flex items-start gap-4 p-3 rounded-2xl hover:bg-gray-50 transition-all duration-300 group/item border border-transparent hover:border-gray-200">
+                                        <div class="w-24 h-20 rounded-xl overflow-hidden bg-gray-100 flex-shrink-0">
+                                            <img src="https://ciberfycr.com/wp-content/uploads/2025/12/114-10-NUEVA.png" class="w-full h-full object-cover group-hover/item:scale-110 transition-transform duration-500" onerror="this.src='https://images.pexels.com/photos/276724/pexels-photo-276724.jpeg?auto=compress&cs=tinysrgb&w=150'">
+                                        </div>
+                                        <div>
+                                            <h4 class="font-medium text-lg text-brand-black mb-1">Classic Premium Room</h4>
+                                            <p class="text-xs text-gray-500 mb-2 line-clamp-2">A timeless and refined living experience.</p>
+                                        </div>
+                                    </a>
+                                    <!-- 5. Superior Room -->
+                                    <a href="gallery.html" class="flex items-start gap-4 p-3 rounded-2xl hover:bg-gray-50 transition-all duration-300 group/item border border-transparent hover:border-gray-200">
+                                        <div class="w-24 h-20 rounded-xl overflow-hidden bg-gray-100 flex-shrink-0">
+                                            <img src="https://ciberfycr.com/wp-content/uploads/2025/12/401-9-NUEVAS-e1740089886141.png" class="w-full h-full object-cover group-hover/item:scale-110 transition-transform duration-500" onerror="this.src='https://images.pexels.com/photos/271618/pexels-photo-271618.jpeg?auto=compress&cs=tinysrgb&w=150'">
+                                        </div>
+                                        <div>
+                                            <h4 class="font-medium text-lg text-brand-black mb-1">Superior Room</h4>
+                                            <p class="text-xs text-gray-500 mb-2 line-clamp-2">Higher standard than standard budget.</p>
+                                        </div>
+                                    </a>
+                                    <!-- 6. Grand Suite -->
+                                    <a href="gallery.html" class="flex items-start gap-4 p-3 rounded-2xl hover:bg-gray-50 transition-all duration-300 group/item border border-transparent hover:border-gray-200">
+                                        <div class="w-24 h-20 rounded-xl overflow-hidden bg-gray-100 flex-shrink-0">
+                                            <img src="https://ciberfycr.com/wp-content/uploads/2025/12/403-3-1-scaled-e1740089625651.jpg" class="w-full h-full object-cover group-hover/item:scale-110 transition-transform duration-500" onerror="this.src='https://images.pexels.com/photos/164595/pexels-photo-164595.jpeg?auto=compress&cs=tinysrgb&w=150'">
+                                        </div>
+                                        <div>
+                                            <h4 class="font-medium text-lg text-brand-black">The Grand Suite</h4>
+                                            <p class="text-xs text-gray-500 mb-2 line-clamp-2">Elegance and spaciousness.</p>
+                                        </div>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- RESTORED GALLERY LINK -->
+                    <a href="photos.html" class="nav-link px-4 py-2 rounded-full text-base text-white hover:bg-white/10">Gallery</a>
+                    <a href="contact.html" class="nav-link px-4 py-2 rounded-full text-base text-white hover:bg-white/10">Contact</a>
+                </div>
+
+                <div class="hidden md:flex items-center gap-2 pr-1">
+                    <a href="tel:+12126780491" class="text-sm font-bold text-white hover:text-brand-gold transition-colors hidden lg:flex items-center gap-2 font-display tracking-tight px-4">
+                        <i data-lucide="phone" class="w-3 h-3"></i> 
+                        +1 (212) 678-0491
+                    </a>
+                    <a href="#" class="bg-brand-gold text-white h-12 px-9 flex items-center rounded-full text-xs font-display font-extrabold uppercase tracking-widest hover:brightness-110 transition-all shadow-[0_0_15px_rgba(255,255,255,0.3)]">
+                        <span>Book Now</span>
+                    </a>
+                </div>
+                
+                <button id="menu-toggle" class="lg:hidden p-2 bg-white/10 rounded-full text-white relative hover:bg-white/20 transition-colors mr-1 z-50">
+                    <i data-lucide="menu" class="w-5 h-5"></i>
+                </button>
+            </div>
+        </div>
+        
+        <!-- MOBILE MENU -->
+        <div id="mobile-menu" class="fixed inset-0 bg-brand-black/95 backdrop-blur-xl z-40 hidden-menu flex flex-col justify-center items-center">
+            <div class="flex flex-col gap-6 text-center">
+                <a href="index.html" class="mobile-link text-3xl font-display font-bold text-white hover:text-brand-gold transition-colors" onclick="toggleMenu()">Home</a>
+                <a href="gallery.html" class="mobile-link text-3xl font-display font-bold text-brand-gold hover:text-white transition-colors" onclick="toggleMenu()">Accommodations</a>
+                <a href="photos.html" class="mobile-link text-3xl font-display font-bold text-white hover:text-brand-gold transition-colors" onclick="toggleMenu()">Gallery</a>
+                <a href="contact.html" class="mobile-link text-3xl font-display font-bold text-white hover:text-brand-gold transition-colors" onclick="toggleMenu()">Contact</a>
+                <a href="#" class="btn-primary h-14 px-10 rounded-full text-lg font-bold uppercase tracking-widest flex items-center justify-center shadow-xl text-white mx-auto" onclick="toggleMenu()">
+                    Book Now
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 1. HERO SECTION -->
+    <header class="relative p-[10px] w-full">
+        <div class="relative w-full h-[55vh] rounded-[2rem] overflow-hidden shadow-2xl group">
+            <img 
+                src="https://images.pexels.com/photos/271618/pexels-photo-271618.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2" 
+                alt="Accommodations Hero" 
+                class="absolute inset-0 w-full h-full object-cover saturate-100 object-center"
+            >
+            <div class="absolute inset-0 bg-brand-black/40"></div>
+            
+            <div class="relative z-10 h-full flex flex-col justify-center items-center text-center px-6 pt-16">
+                <span class="text-brand-gold text-sm font-bold tracking-[0.3em] uppercase mb-4 animate-fade-in">Your Next Home In New York</span>
+                <h1 class="font-serif font-medium text-6xl md:text-7xl text-white mb-6 animate-fade-in tracking-tight" style="animation-delay: 0.1s;">Rooms</h1>
+                <p class="text-white/90 text-lg max-w-2xl font-sans font-light animate-fade-in tracking-wide leading-relaxed" style="animation-delay: 0.2s;">
+                    Discover our selection of fully furnished rooms designed to make your stay in NYC comfortable and stress-free.
+                </p>
+            </div>
+        </div>
+    </header>
+
+    <!-- 2. INTRODUCTION (Updated Container) -->
+    <section class="mt-16 px-6">
+        <div class="max-w-[1400px] mx-auto flex flex-col md:flex-row justify-between items-end gap-8 mb-12 animate-slide-up" style="animation-delay: 0.3s;">
+            <div class="max-w-2xl">
+                <h2 class="text-4xl font-serif text-brand-black mb-4">Discover our rooms</h2>
+                <!-- New Description -->
+                <p class="text-gray-500 font-light leading-relaxed text-lg">
+                    Explore our wide range of fully furnished rooms, each thoughtfully designed to provide you with the perfect home base in New York City.
+                </p>
+            </div>
+            
+            <!-- Filters REMOVED -->
+        </div>
+    </section>
+
+    <!-- 3. ROOMS GRID (Updated Width & Columns) -->
+    <section class="pb-24 px-6">
+        <!-- Changed max-w-7xl to max-w-[1400px] AND reverted to lg:grid-cols-3 -->
+        <div class="max-w-[1400px] mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8" id="rooms-grid">
+            
+            <!-- ROOM 1: Classic Petite -->
+            <article class="room-card group animate-slide-up" style="animation-delay: 0.1s;">
+                <div class="room-image-container">
+                    <img src="https://ciberfycr.com/wp-content/uploads/2025/12/506-1-NUEVA.png" alt="Classic Petite Room" onerror="this.src='https://images.pexels.com/photos/271624/pexels-photo-271624.jpeg?auto=compress&cs=tinysrgb&w=600'">
+                    <!-- Badge REMOVED -->
+                </div>
+                <div class="p-8 flex flex-col flex-grow">
+                    <div class="flex justify-between items-start mb-2">
+                        <h3 class="text-2xl font-serif text-brand-black">Classic Petite</h3>
+                    </div>
+                    <p class="text-sm text-gray-500 mb-6">Ideal for short or extended stays. Compact, cozy, and efficiently designed for the solo traveler.</p>
+                    
+                    <!-- NEW FOOTER LAYOUT: Amenities Left, Button Right -->
+                    <div class="mt-auto pt-6 border-t border-gray-100 flex items-center justify-between">
+                        <!-- Amenities (Left) -->
+                        <div class="flex gap-2 text-gray-400">
+                            <div class="amenity-icon" title="Wi-Fi"><i data-lucide="wifi" class="w-4 h-4"></i></div>
+                            <div class="amenity-icon" title="Single Bed"><i data-lucide="bed-single" class="w-4 h-4"></i></div>
+                            <div class="amenity-icon" title="Work Desk"><i data-lucide="monitor" class="w-4 h-4"></i></div>
+                            <div class="amenity-icon" title="Shared Bath"><i data-lucide="droplets" class="w-4 h-4"></i></div>
+                        </div>
+
+                        <!-- Button (Right) -->
+                        <a href="#" class="btn-primary h-12 rounded-full flex items-center justify-center w-12 group-hover:w-36 transition-all duration-300 overflow-hidden ml-4">
+                            <span class="text-sm font-bold whitespace-nowrap opacity-0 max-w-0 group-hover:max-w-[100px] group-hover:opacity-100 transition-all duration-500 ease-in-out">View Room</span>
+                            <i data-lucide="arrow-right" class="w-5 h-5 group-hover:ml-2 transition-all duration-300"></i>
+                        </a>
+                    </div>
+                </div>
+            </article>
+
+            <!-- ROOM 2: Classic Economy -->
+            <article class="room-card group animate-slide-up" style="animation-delay: 0.2s;">
+                <div class="room-image-container">
+                    <img src="https://ciberfycr.com/wp-content/uploads/2025/12/301-6-NUEVA.png" alt="Classic Economy Room" onerror="this.src='https://images.pexels.com/photos/271618/pexels-photo-271618.jpeg?auto=compress&cs=tinysrgb&w=600'">
+                </div>
+                <div class="p-8 flex flex-col flex-grow">
+                    <div class="flex justify-between items-start mb-2">
+                        <h3 class="text-2xl font-serif text-brand-black">Classic Economy</h3>
+                    </div>
+                    <p class="text-sm text-gray-500 mb-6">Affordable, functional, and comfortable. A perfect balance of price and amenities.</p>
+                    
+                    <div class="mt-auto pt-6 border-t border-gray-100 flex items-center justify-between">
+                        <!-- Amenities -->
+                        <div class="flex gap-2 text-gray-400">
+                            <div class="amenity-icon"><i data-lucide="wifi" class="w-4 h-4"></i></div>
+                            <div class="amenity-icon"><i data-lucide="bed-double" class="w-4 h-4"></i></div>
+                            <div class="amenity-icon"><i data-lucide="sun" class="w-4 h-4"></i></div>
+                            <div class="amenity-icon"><i data-lucide="droplets" class="w-4 h-4"></i></div>
+                        </div>
+
+                        <!-- Button -->
+                        <a href="#" class="btn-primary h-12 rounded-full flex items-center justify-center w-12 group-hover:w-36 transition-all duration-300 overflow-hidden ml-4">
+                            <span class="text-sm font-bold whitespace-nowrap opacity-0 max-w-0 group-hover:max-w-[100px] group-hover:opacity-100 transition-all duration-500 ease-in-out">View Room</span>
+                            <i data-lucide="arrow-right" class="w-5 h-5 group-hover:ml-2 transition-all duration-300"></i>
+                        </a>
+                    </div>
+                </div>
+            </article>
+
+            <!-- ROOM 3: Full Classic -->
+            <article class="room-card group animate-slide-up" style="animation-delay: 0.3s;">
+                <div class="room-image-container">
+                    <img src="https://ciberfycr.com/wp-content/uploads/2025/12/312-9-NUEVA.png" alt="Full Classic Room" onerror="this.src='https://images.pexels.com/photos/279746/pexels-photo-279746.jpeg?auto=compress&cs=tinysrgb&w=600'">
+                    <!-- Badge REMOVED -->
+                </div>
+                <div class="p-8 flex flex-col flex-grow">
+                    <div class="flex justify-between items-start mb-2">
+                        <h3 class="text-2xl font-serif text-brand-black">Full Classic</h3>
+                    </div>
+                    <p class="text-sm text-gray-500 mb-6">Efficient layouts that maximize space. Includes private amenities for a more independent lifestyle.</p>
+                    
+                    <div class="mt-auto pt-6 border-t border-gray-100 flex items-center justify-between">
+                        <!-- Amenities -->
+                        <div class="flex gap-2 text-gray-400">
+                            <div class="amenity-icon"><i data-lucide="wifi" class="w-4 h-4"></i></div>
+                            <div class="amenity-icon"><i data-lucide="bed-double" class="w-4 h-4"></i></div>
+                            <div class="amenity-icon"><i data-lucide="bath" class="w-4 h-4"></i></div>
+                            <div class="amenity-icon"><i data-lucide="tv" class="w-4 h-4"></i></div>
+                        </div>
+
+                        <!-- Button -->
+                        <a href="#" class="btn-primary h-12 rounded-full flex items-center justify-center w-12 group-hover:w-36 transition-all duration-300 overflow-hidden ml-4">
+                            <span class="text-sm font-bold whitespace-nowrap opacity-0 max-w-0 group-hover:max-w-[100px] group-hover:opacity-100 transition-all duration-500 ease-in-out">View Room</span>
+                            <i data-lucide="arrow-right" class="w-5 h-5 group-hover:ml-2 transition-all duration-300"></i>
+                        </a>
+                    </div>
+                </div>
+            </article>
+
+            <!-- ROOM 4: Classic Premium -->
+            <article class="room-card group animate-slide-up" style="animation-delay: 0.4s;">
+                <div class="room-image-container">
+                    <img src="https://ciberfycr.com/wp-content/uploads/2025/12/114-10-NUEVA.png" alt="Premium Classic Room" onerror="this.src='https://images.pexels.com/photos/276724/pexels-photo-276724.jpeg?auto=compress&cs=tinysrgb&w=600'">
+                </div>
+                <div class="p-8 flex flex-col flex-grow">
+                    <div class="flex justify-between items-start mb-2">
+                        <h3 class="text-2xl font-serif text-brand-black">Classic Premium</h3>
+                    </div>
+                    <p class="text-sm text-gray-500 mb-6">A timeless and refined living experience with upgraded furnishings and superior views.</p>
+                    
+                    <div class="mt-auto pt-6 border-t border-gray-100 flex items-center justify-between">
+                        <!-- Amenities -->
+                        <div class="flex gap-2 text-gray-400">
+                            <div class="amenity-icon"><i data-lucide="wifi" class="w-4 h-4"></i></div>
+                            <div class="amenity-icon"><i data-lucide="bed-double" class="w-4 h-4"></i></div>
+                            <div class="amenity-icon"><i data-lucide="bath" class="w-4 h-4"></i></div>
+                            <div class="amenity-icon"><i data-lucide="coffee" class="w-4 h-4"></i></div>
+                        </div>
+
+                        <!-- Button -->
+                        <a href="#" class="btn-primary h-12 rounded-full flex items-center justify-center w-12 group-hover:w-36 transition-all duration-300 overflow-hidden ml-4">
+                            <span class="text-sm font-bold whitespace-nowrap opacity-0 max-w-0 group-hover:max-w-[100px] group-hover:opacity-100 transition-all duration-500 ease-in-out">View Room</span>
+                            <i data-lucide="arrow-right" class="w-5 h-5 group-hover:ml-2 transition-all duration-300"></i>
+                        </a>
+                    </div>
+                </div>
+            </article>
+
+            <!-- ROOM 5: Superior Room -->
+            <article class="room-card group animate-slide-up" style="animation-delay: 0.5s;">
+                <div class="room-image-container">
+                    <img src="https://ciberfycr.com/wp-content/uploads/2025/12/401-9-NUEVAS-e1740089886141.png" alt="Superior Room" onerror="this.src='https://images.pexels.com/photos/271618/pexels-photo-271618.jpeg?auto=compress&cs=tinysrgb&w=600'">
+                </div>
+                <div class="p-8 flex flex-col flex-grow">
+                    <div class="flex justify-between items-start mb-2">
+                        <h3 class="text-2xl font-serif text-brand-black">Superior Room</h3>
+                    </div>
+                    <p class="text-sm text-gray-500 mb-6">Higher standard than our classic rooms, offering extra space and premium finishes.</p>
+                    
+                    <div class="mt-auto pt-6 border-t border-gray-100 flex items-center justify-between">
+                        <!-- Amenities -->
+                        <div class="flex gap-2 text-gray-400">
+                            <div class="amenity-icon"><i data-lucide="wifi" class="w-4 h-4"></i></div>
+                            <div class="amenity-icon"><i data-lucide="maximize" class="w-4 h-4"></i></div>
+                            <div class="amenity-icon"><i data-lucide="bath" class="w-4 h-4"></i></div>
+                            <div class="amenity-icon"><i data-lucide="armchair" class="w-4 h-4"></i></div>
+                        </div>
+
+                        <!-- Button -->
+                        <a href="#" class="btn-primary h-12 rounded-full flex items-center justify-center w-12 group-hover:w-36 transition-all duration-300 overflow-hidden ml-4">
+                            <span class="text-sm font-bold whitespace-nowrap opacity-0 max-w-0 group-hover:max-w-[100px] group-hover:opacity-100 transition-all duration-500 ease-in-out">View Room</span>
+                            <i data-lucide="arrow-right" class="w-5 h-5 group-hover:ml-2 transition-all duration-300"></i>
+                        </a>
+                    </div>
+                </div>
+            </article>
+
+            <!-- ROOM 6: The Grand Suite -->
+            <article class="room-card group animate-slide-up" style="animation-delay: 0.6s;">
+                <div class="room-image-container">
+                    <img src="https://ciberfycr.com/wp-content/uploads/2025/12/403-3-1-scaled-e1740089625651.jpg" alt="The Grand Suite" onerror="this.src='https://images.pexels.com/photos/164595/pexels-photo-164595.jpeg?auto=compress&cs=tinysrgb&w=600'">
+                    <!-- Badge REMOVED -->
+                </div>
+                <div class="p-8 flex flex-col flex-grow">
+                    <div class="flex justify-between items-start mb-2">
+                        <h3 class="text-2xl font-serif text-brand-black">The Grand Suite</h3>
+                    </div>
+                    <p class="text-sm text-gray-500 mb-6">The pinnacle of elegance and spaciousness. Features a separate living area and kitchenette.</p>
+                    
+                    <div class="mt-auto pt-6 border-t border-gray-100 flex items-center justify-between">
+                        <!-- Amenities -->
+                        <div class="flex gap-2 text-gray-400">
+                            <div class="amenity-icon"><i data-lucide="wifi" class="w-4 h-4"></i></div>
+                            <div class="amenity-icon"><i data-lucide="utensils" class="w-4 h-4"></i></div>
+                            <div class="amenity-icon"><i data-lucide="bath" class="w-4 h-4"></i></div>
+                            <div class="amenity-icon"><i data-lucide="sofa" class="w-4 h-4"></i></div>
+                        </div>
+
+                        <!-- Button -->
+                        <a href="#" class="btn-primary h-12 rounded-full flex items-center justify-center w-12 group-hover:w-36 transition-all duration-300 overflow-hidden ml-4">
+                            <span class="text-sm font-bold whitespace-nowrap opacity-0 max-w-0 group-hover:max-w-[100px] group-hover:opacity-100 transition-all duration-500 ease-in-out">View Room</span>
+                            <i data-lucide="arrow-right" class="w-5 h-5 group-hover:ml-2 transition-all duration-300"></i>
+                        </a>
+                    </div>
+                </div>
+            </article>
+
+        </div>
+    </section>
+
+    <!-- FOOTER (Container widened to 1400px) -->
+    <footer id="contact" class="bg-white border-t border-gray-100 pt-24 pb-12">
+        <div class="max-w-[1400px] mx-auto px-6">
+            <div class="flex flex-col lg:flex-row justify-between items-start gap-16 mb-20">
+                <div class="max-w-sm">
+                    <a href="index.html" class="flex items-center gap-2 group mb-6">
+                        <div class="w-10 h-10 bg-brand-black text-white flex items-center justify-center font-sans text-xl italic rounded-xl">C</div>
+                        <span class="text-display text-2xl font-bold tracking-tighter text-brand-black">
+                            central<span class="font-light">park</span>.
+                        </span>
+                    </a>
+                    <p class="text-gray-500 text-sm leading-relaxed mb-8">
+                        Redefining the 'Extended Stay' concept in New York. Choose your dates easily and enjoy a seamless relocation experience with total comfort in Manhattan's best location.
+                    </p>
+                    <div class="flex gap-4">
+                        <a href="#" class="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center hover:bg-brand-black hover:text-white transition-all"><i data-lucide="instagram" class="w-4 h-4"></i></a>
+                        <a href="#" class="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center hover:bg-brand-black hover:text-white transition-all"><i data-lucide="facebook" class="w-4 h-4"></i></a>
+                        <a href="#" class="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center hover:bg-brand-black hover:text-white transition-all"><i data-lucide="mail" class="w-4 h-4"></i></a>
+                    </div>
+                </div>
+                
+                <div class="grid grid-cols-2 md:grid-cols-3 gap-16 lg:gap-24">
+                    <div>
+                        <h4 class="text-xs font-bold uppercase tracking-widest mb-8 text-brand-black">Contact</h4>
+                        <ul class="space-y-4 text-sm text-gray-500 font-medium">
+                            <li>19 West 103rd Street,<br>New York, NY 10025</li>
+                            <li><a href="tel:+12126780491" class="hover:text-brand-black transition-colors">+1 (212) 678-0491</a></li>
+                            <li><a href="mailto:info@centralparkinn.com" class="hover:text-brand-black transition-colors">info@centralparkinn.com</a></li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 class="text-xs font-bold uppercase tracking-widest mb-8 text-brand-black">Links</h4>
+                        <ul class="space-y-4 text-sm text-gray-500 font-medium">
+                            <li><a href="index.html" class="hover:text-brand-black transition-colors">Home</a></li>
+                            <li><a href="#" class="hover:text-brand-black transition-colors">Accommodations</a></li>
+                            <li><a href="gallery.html" class="hover:text-brand-black transition-colors">Gallery</a></li>
+                            <li><a href="contact.html" class="hover:text-brand-black transition-colors">Contact</a></li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 class="text-xs font-bold uppercase tracking-widest mb-8 text-brand-black">Legal</h4>
+                        <ul class="space-y-4 text-sm text-gray-500 font-medium">
+                            <li><a href="#" class="hover:text-brand-black transition-colors">Terms</a></li>
+                            <li><a href="#" class="hover:text-brand-black transition-colors">Privacy</a></li>
+                            <li><a href="#" class="hover:text-brand-black transition-colors">Cookies</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-100 pt-8 flex flex-col md:flex-row justify-between items-center text-xs text-gray-400 font-medium gap-4">
+                <p>&copy; 2026 Central Park Apartments NYC. All rights reserved.</p>
+                <div class="flex gap-6">
+                    <span class="text-gray-400">Designed by Ciberfy Development</span>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- LOGIC -->
+    <script>
+        lucide.createIcons();
+        const navbar = document.getElementById('navbar');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                navbar.classList.add('nav-scrolled');
+            } else {
+                navbar.classList.remove('nav-scrolled');
+            }
+        });
+
+        // Toggle Mobile Menu
+        function toggleMenu() {
+            const menu = document.getElementById('mobile-menu');
+            const toggleBtn = document.getElementById('menu-toggle');
+            if (menu.classList.contains('hidden-menu')) {
+                menu.classList.remove('hidden-menu');
+                menu.classList.add('visible-menu');
+                toggleBtn.innerHTML = '<i data-lucide="x" class="w-5 h-5"></i>';
+                lucide.createIcons();
+            } else {
+                menu.classList.remove('visible-menu');
+                menu.classList.add('hidden-menu');
+                toggleBtn.innerHTML = '<i data-lucide="menu" class="w-5 h-5"></i>';
+                lucide.createIcons();
+            }
+        }
+
+        document.getElementById('menu-toggle').addEventListener('click', toggleMenu);
+
+        // --- FILTERS REMOVED ---
+        // JS Logic removed as filter buttons are gone
+
+    </script>
+</body>
+</html>
