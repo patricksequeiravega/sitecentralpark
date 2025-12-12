@@ -1,0 +1,635 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Classic Petite Room | Central Park Apartments NYC</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts: Manrope (Main), Playfair Display & POPPINS -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <!-- Tailwind Configuration -->
+    <script>
+        tailwind.config = {
+            important: true, 
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Manrope', 'sans-serif'], 
+                        display: ['Manrope', 'sans-serif'], 
+                        serif: ['Manrope', 'sans-serif'], 
+                        poppins: ['Poppins', 'sans-serif'], 
+                    },
+                    colors: {
+                        brand: {
+                            black: '#0F0F0F', 
+                            gold: '#00d89d',  /* Teal/Green Brand Color from previous file */
+                            cream: '#F5F5F2', 
+                            darkGreen: '#14261C', 
+                            surface: '#FFFFFF',
+                            gray: '#9CA3AF'
+                        }
+                    },
+                    borderRadius: {
+                        'super': '2rem', 
+                        'pill': '9999px',
+                        'card': '1.5rem'
+                    },
+                    boxShadow: {
+                        'soft': '0 20px 40px -10px rgba(0, 0, 0, 0.05)',
+                        'glass': '0 8px 32px 0 rgba(31, 38, 135, 0.07)',
+                        'hover': '0 30px 60px -15px rgba(0, 0, 0, 0.1)',
+                    },
+                    animation: {
+                        'fade-in': 'fadeIn 0.6s ease-out forwards',
+                        'slide-up': 'slideUp 0.6s ease-out forwards',
+                    },
+                    keyframes: {
+                        fadeIn: {
+                            '0%': { opacity: '0' },
+                            '100%': { opacity: '1' },
+                        },
+                        slideUp: {
+                            '0%': { opacity: '0', transform: 'translateY(20px)' },
+                            '100%': { opacity: '1', transform: 'translateY(0)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <style>
+        body { background-color: #F5F5F2 !important; color: #0F0F0F !important; }
+        
+        /* --- NAVBAR FLOTANTE (DARK GLASS) --- */
+        .nav-glass {
+            background-color: rgba(15, 15, 15, 0.4); 
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.15); 
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.15); 
+        }
+
+        .nav-scrolled .nav-glass {
+            background-color: rgba(15, 15, 15, 0.7); 
+            box-shadow: 0 10px 30px -10px rgba(0,0,0,0.3);
+            border-color: rgba(255, 255, 255, 0.1);
+        }
+
+        .nav-link {
+            position: relative;
+            font-weight: 600;
+            color: #FFFFFF !important; 
+            transition: color 0.3s ease;
+        }
+        
+        .nav-link.active::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 50%;
+            width: 20px; 
+            height: 2px;
+            background-color: #00d89d; 
+            transform: translateX(-50%);
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 50%;
+            width: 0;
+            height: 2px;
+            background-color: #00d89d; 
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            transform: translateX(-50%);
+        }
+
+        .nav-link:hover::after {
+            width: 20px;
+        }
+
+        /* --- MEGA MENU --- */
+        .mega-menu-content {
+            transform-origin: top center;
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        
+        .mega-menu-trigger:hover .mega-menu-content {
+            opacity: 1 !important;
+            visibility: visible !important;
+            transform: translate(-50%, 0) scale(1) !important;
+        }
+
+        .mega-menu-glass {
+            background-color: rgba(255, 255, 255, 0.95); 
+            backdrop-filter: blur(40px); 
+            -webkit-backdrop-filter: blur(40px);
+            border: 1px solid rgba(0, 0, 0, 0.05); 
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        }
+
+        /* --- BUTTONS --- */
+        .btn-primary {
+            background-color: #00d89d !important; 
+            color: white;
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            border: 1px solid transparent;
+        }
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            background-color: #00c48f !important;
+            box-shadow: 0 10px 20px -5px rgba(0, 216, 157, 0.4); 
+            filter: brightness(1.1); 
+            border-color: transparent;
+        }
+        
+        .btn-outline-gold {
+            background-color: transparent;
+            border: 1px solid #00d89d;
+            color: #00d89d;
+            transition: all 0.3s ease;
+        }
+        .btn-outline-gold:hover {
+            background-color: #00d89d;
+            color: white;
+        }
+
+        /* --- GALLERY STYLES --- */
+        .gallery-main-img {
+            transition: opacity 0.3s ease-in-out;
+        }
+        .gallery-thumb {
+            cursor: pointer;
+            border: 2px solid transparent;
+            transition: all 0.3s ease;
+        }
+        .gallery-thumb.active-thumb {
+            border-color: #00d89d;
+            opacity: 0.8;
+        }
+        .gallery-thumb:hover {
+            transform: translateY(-2px);
+        }
+
+        /* Mobile Menu */
+        #mobile-menu {
+            transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.5s ease;
+        }
+        #mobile-menu.hidden-menu {
+            transform: translateY(-100%);
+            opacity: 0;
+            pointer-events: none;
+        }
+        #mobile-menu.visible-menu {
+            transform: translateY(0);
+            opacity: 1;
+            pointer-events: auto;
+        }
+        
+        /* Amenities Card Hover */
+        .amenity-card {
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.1);
+            transition: all 0.3s ease;
+        }
+        .amenity-card:hover {
+            background: rgba(255,255,255,0.1);
+            border-color: #00d89d;
+            transform: translateY(-5px);
+        }
+        .amenity-card i {
+            transition: all 0.3s ease;
+        }
+        .amenity-card:hover i {
+            color: #00d89d;
+            transform: scale(1.1);
+        }
+
+    </style>
+</head>
+<body class="font-sans text-brand-black antialiased selection:bg-brand-gold selection:text-white">
+
+    <!-- NAV (Container widened to 1400px) -->
+    <nav id="navbar" class="fixed w-full z-50 top-0 pt-8 transition-all duration-500">
+        <div class="max-w-[1400px] mx-auto px-4 lg:px-8">
+            <div class="nav-glass rounded-full px-4 py-3 flex justify-between items-center w-full max-w-5xl mx-auto relative z-50">
+                <!-- Logo -->
+                <a href="index.html" class="flex items-center gap-2 group relative px-2">
+                    <div class="w-10 h-10 bg-white text-brand-black flex items-center justify-center font-sans text-lg italic rounded-full shadow-lg transition-colors">C</div>
+                    <span class="text-display text-2xl font-bold tracking-tighter text-white">
+                        central<span class="font-light text-gray-400 group-hover:text-white transition-colors">park</span>.
+                    </span>
+                </a>
+
+                <!-- Desktop Menu -->
+                <div class="hidden lg:flex items-center gap-2">
+                    <a href="index.html" class="nav-link px-4 py-2 rounded-full text-base text-white hover:bg-white/10">Home</a>
+                    
+                    <!-- Accommodations Link Active with FULL MEGA MENU -->
+                    <div class="relative group mega-menu-trigger h-full">
+                        <a href="gallery.html" class="nav-link active px-4 py-2 rounded-full text-base text-white hover:bg-white/10 flex items-center gap-1.5 cursor-pointer">
+                            Accommodations 
+                            <i data-lucide="chevron-down" class="w-3.5 h-3.5 opacity-70 group-hover:rotate-180 transition-transform"></i>
+                        </a>
+                        <!-- Dropdown -->
+                        <div class="mega-menu-content absolute top-full left-1/2 -translate-x-1/2 pt-8 w-[800px] opacity-0 invisible transform -translate-y-4 scale-95 origin-top z-50 font-poppins">
+                            <div class="mega-menu-glass rounded-[2rem] p-8 relative overflow-hidden text-brand-black">
+                                <div class="flex justify-between items-center mb-8 border-b border-gray-100 pb-4">
+                                    <span class="text-xl font-medium font-poppins text-brand-black">Our Rooms</span>
+                                    <a href="#" class="text-sm font-bold text-brand-gold hover:text-brand-black transition-colors flex items-center gap-1">
+                                        See all <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                                    </a>
+                                </div>
+                                <div class="grid grid-cols-2 gap-3">
+                                    <!-- 1. Classic Petite -->
+                                    <a href="room-details.html" class="flex items-start gap-4 p-3 rounded-2xl hover:bg-gray-50 transition-all duration-300 group/item border border-transparent hover:border-gray-200 bg-gray-50">
+                                        <div class="w-24 h-20 rounded-xl overflow-hidden bg-gray-100 flex-shrink-0">
+                                            <img src="https://ciberfycr.com/wp-content/uploads/2025/12/506-1-NUEVA.png" class="w-full h-full object-cover group-hover/item:scale-110 transition-transform duration-500" onerror="this.src='https://images.pexels.com/photos/271624/pexels-photo-271624.jpeg?auto=compress&cs=tinysrgb&w=150'">
+                                        </div>
+                                        <div>
+                                            <h4 class="font-medium text-lg text-brand-black mb-1">Classic Petite Room</h4>
+                                            <p class="text-xs text-gray-500 mb-2 line-clamp-2">Ideal for short or extended stays.</p>
+                                        </div>
+                                    </a>
+                                    <!-- 2. Classic Economy -->
+                                    <a href="gallery.html" class="flex items-start gap-4 p-3 rounded-2xl hover:bg-gray-50 transition-all duration-300 group/item border border-transparent hover:border-gray-200">
+                                        <div class="w-24 h-20 rounded-xl overflow-hidden bg-gray-100 flex-shrink-0">
+                                            <img src="https://ciberfycr.com/wp-content/uploads/2025/12/301-6-NUEVA.png" class="w-full h-full object-cover group-hover/item:scale-110 transition-transform duration-500" onerror="this.src='https://images.pexels.com/photos/271618/pexels-photo-271618.jpeg?auto=compress&cs=tinysrgb&w=150'">
+                                        </div>
+                                        <div>
+                                            <h4 class="font-medium text-lg text-brand-black mb-1">Classic Economy Room</h4>
+                                            <p class="text-xs text-gray-500 mb-2 line-clamp-2">Affordable, functional, and comfortable.</p>
+                                        </div>
+                                    </a>
+                                    <!-- 3. Full Classic -->
+                                    <a href="gallery.html" class="flex items-start gap-4 p-3 rounded-2xl hover:bg-gray-50 transition-all duration-300 group/item border border-transparent hover:border-gray-200">
+                                        <div class="w-24 h-20 rounded-xl overflow-hidden bg-gray-100 flex-shrink-0">
+                                            <img src="https://ciberfycr.com/wp-content/uploads/2025/12/312-9-NUEVA.png" class="w-full h-full object-cover group-hover/item:scale-110 transition-transform duration-500" onerror="this.src='https://images.pexels.com/photos/279746/pexels-photo-279746.jpeg?auto=compress&cs=tinysrgb&w=150'">
+                                        </div>
+                                        <div>
+                                            <h4 class="font-medium text-lg text-brand-black mb-1">Full Classic Room</h4>
+                                            <p class="text-xs text-gray-500 mb-2 line-clamp-2">Efficient layouts that maximize space.</p>
+                                        </div>
+                                    </a>
+                                    <!-- 4. Classic Premium -->
+                                    <a href="gallery.html" class="flex items-start gap-4 p-3 rounded-2xl hover:bg-gray-50 transition-all duration-300 group/item border border-transparent hover:border-gray-200">
+                                        <div class="w-24 h-20 rounded-xl overflow-hidden bg-gray-100 flex-shrink-0">
+                                            <img src="https://ciberfycr.com/wp-content/uploads/2025/12/114-10-NUEVA.png" class="w-full h-full object-cover group-hover/item:scale-110 transition-transform duration-500" onerror="this.src='https://images.pexels.com/photos/276724/pexels-photo-276724.jpeg?auto=compress&cs=tinysrgb&w=150'">
+                                        </div>
+                                        <div>
+                                            <h4 class="font-medium text-lg text-brand-black mb-1">Classic Premium Room</h4>
+                                            <p class="text-xs text-gray-500 mb-2 line-clamp-2">A timeless and refined living experience.</p>
+                                        </div>
+                                    </a>
+                                    <!-- 5. Superior Room -->
+                                    <a href="gallery.html" class="flex items-start gap-4 p-3 rounded-2xl hover:bg-gray-50 transition-all duration-300 group/item border border-transparent hover:border-gray-200">
+                                        <div class="w-24 h-20 rounded-xl overflow-hidden bg-gray-100 flex-shrink-0">
+                                            <img src="https://ciberfycr.com/wp-content/uploads/2025/12/401-9-NUEVAS-e1740089886141.png" class="w-full h-full object-cover group-hover/item:scale-110 transition-transform duration-500" onerror="this.src='https://images.pexels.com/photos/271618/pexels-photo-271618.jpeg?auto=compress&cs=tinysrgb&w=150'">
+                                        </div>
+                                        <div>
+                                            <h4 class="font-medium text-lg text-brand-black mb-1">Superior Room</h4>
+                                            <p class="text-xs text-gray-500 mb-2 line-clamp-2">Higher standard than standard budget.</p>
+                                        </div>
+                                    </a>
+                                    <!-- 6. Grand Suite -->
+                                    <a href="gallery.html" class="flex items-start gap-4 p-3 rounded-2xl hover:bg-gray-50 transition-all duration-300 group/item border border-transparent hover:border-gray-200">
+                                        <div class="w-24 h-20 rounded-xl overflow-hidden bg-gray-100 flex-shrink-0">
+                                            <img src="https://ciberfycr.com/wp-content/uploads/2025/12/403-3-1-scaled-e1740089625651.jpg" class="w-full h-full object-cover group-hover/item:scale-110 transition-transform duration-500" onerror="this.src='https://images.pexels.com/photos/164595/pexels-photo-164595.jpeg?auto=compress&cs=tinysrgb&w=150'">
+                                        </div>
+                                        <div>
+                                            <h4 class="font-medium text-lg text-brand-black">The Grand Suite</h4>
+                                            <p class="text-xs text-gray-500 mb-2 line-clamp-2">Elegance and spaciousness.</p>
+                                        </div>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <a href="photos.html" class="nav-link px-4 py-2 rounded-full text-base text-white hover:bg-white/10">Gallery</a>
+                    <a href="contact.html" class="nav-link px-4 py-2 rounded-full text-base text-white hover:bg-white/10">Contact</a>
+                </div>
+
+                <div class="hidden md:flex items-center gap-2 pr-1">
+                    <a href="tel:+12126780491" class="text-sm font-bold text-white hover:text-brand-gold transition-colors hidden lg:flex items-center gap-2 font-display tracking-tight px-4">
+                        <i data-lucide="phone" class="w-3 h-3"></i> 
+                        +1 (212) 678-0491
+                    </a>
+                    <a href="#" class="bg-brand-gold text-white h-12 px-9 flex items-center rounded-full text-xs font-display font-extrabold uppercase tracking-widest hover:brightness-110 transition-all shadow-[0_0_15px_rgba(255,255,255,0.3)]">
+                        <span>Book Now</span>
+                    </a>
+                </div>
+                
+                <button id="menu-toggle" class="lg:hidden p-2 bg-white/10 rounded-full text-white relative hover:bg-white/20 transition-colors mr-1 z-50">
+                    <i data-lucide="menu" class="w-5 h-5"></i>
+                </button>
+            </div>
+        </div>
+        
+        <!-- MOBILE MENU -->
+        <div id="mobile-menu" class="fixed inset-0 bg-brand-black/95 backdrop-blur-xl z-40 hidden-menu flex flex-col justify-center items-center">
+            <div class="flex flex-col gap-6 text-center">
+                <a href="index.html" class="mobile-link text-3xl font-display font-bold text-white hover:text-brand-gold transition-colors" onclick="toggleMenu()">Home</a>
+                <a href="gallery.html" class="mobile-link text-3xl font-display font-bold text-brand-gold hover:text-white transition-colors" onclick="toggleMenu()">Accommodations</a>
+                <a href="photos.html" class="mobile-link text-3xl font-display font-bold text-white hover:text-brand-gold transition-colors" onclick="toggleMenu()">Gallery</a>
+                <a href="contact.html" class="mobile-link text-3xl font-display font-bold text-white hover:text-brand-gold transition-colors" onclick="toggleMenu()">Contact</a>
+                <a href="#" class="btn-primary h-14 px-10 rounded-full text-lg font-bold uppercase tracking-widest flex items-center justify-center shadow-xl text-white mx-auto" onclick="toggleMenu()">
+                    Book Now
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 1. HERO SECTION (Classic Petite Specific) -->
+    <header class="relative p-[10px] w-full">
+        <div class="relative w-full h-[60vh] md:h-[70vh] rounded-[2rem] overflow-hidden shadow-2xl group">
+            <img 
+                src="https://ciberfycr.com/wp-content/uploads/2025/12/506-1-NUEVA.png" 
+                alt="Classic Petite Room" 
+                class="absolute inset-0 w-full h-full object-cover saturate-100 object-center transition-transform duration-1000 group-hover:scale-105"
+                onerror="this.src='https://images.pexels.com/photos/271624/pexels-photo-271624.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2'"
+            >
+            <!-- Darker overlay for text readability -->
+            <div class="absolute inset-0 bg-gradient-to-t from-brand-black/80 via-brand-black/20 to-brand-black/30"></div>
+            
+            <!-- CORRECCIÓN 1: justify-center para centrar verticalmente -->
+            <div class="relative z-10 h-full flex flex-col justify-center items-center text-center px-6">
+                <div class="animate-slide-up">
+                    <span class="text-brand-gold text-sm font-bold tracking-[0.3em] uppercase mb-2 block">Our Accommodations</span>
+                    <h1 class="font-serif font-medium text-5xl md:text-7xl text-white mb-4 tracking-tight">Classic Petite Room</h1>
+                    <div class="h-1 w-24 bg-brand-gold mx-auto rounded-full"></div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- 2. ROOM GALLERY & OVERVIEW -->
+    <section class="py-16 px-6">
+        <div class="max-w-[1400px] mx-auto">
+            
+            <!-- Breadcrumbs -->
+            <div class="flex items-center gap-2 text-sm text-gray-400 mb-8 animate-fade-in font-medium">
+                <a href="index.html" class="!text-gray-400 hover:!text-brand-gold transition-colors">Home</a>
+                <i data-lucide="chevron-right" class="w-4 h-4"></i>
+                <a href="gallery.html" class="!text-gray-400 hover:!text-brand-gold transition-colors">Accommodations</a>
+                <i data-lucide="chevron-right" class="w-4 h-4"></i>
+                <span class="text-brand-gold">Classic Petite</span>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-12">
+                
+                <!-- Left: Gallery (8 cols) -->
+                <div class="lg:col-span-8 space-y-4 animate-slide-up" style="animation-delay: 0.2s;">
+                    <!-- Main Image Frame -->
+                    <div class="relative w-full h-[400px] md:h-[550px] rounded-3xl overflow-hidden shadow-soft bg-gray-100 group">
+                        <img 
+                            id="main-image" 
+                            src="https://ciberfycr.com/wp-content/uploads/2025/12/506-1-NUEVA.png" 
+                            alt="Classic Petite Main View" 
+                            class="w-full h-full object-cover transition-transform duration-700 ease-out"
+                            onerror="this.src='https://images.pexels.com/photos/271624/pexels-photo-271624.jpeg?auto=compress&cs=tinysrgb&w=1260'"
+                        >
+                        <!-- Hover Zoom Hint -->
+                        <div class="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors pointer-events-none"></div>
+                    </div>
+                    
+                    <!-- Thumbnails Grid -->
+                    <div class="grid grid-cols-4 gap-4">
+                        <div class="h-24 md:h-32 rounded-2xl overflow-hidden cursor-pointer gallery-thumb active-thumb shadow-sm" onclick="changeImage(this, 'https://ciberfycr.com/wp-content/uploads/2025/12/506-1-NUEVA.png')">
+                            <img src="https://ciberfycr.com/wp-content/uploads/2025/12/506-1-NUEVA.png" class="w-full h-full object-cover hover:scale-110 transition-transform duration-500" onerror="this.src='https://images.pexels.com/photos/271624/pexels-photo-271624.jpeg?auto=compress&cs=tinysrgb&w=300'">
+                        </div>
+                        <div class="h-24 md:h-32 rounded-2xl overflow-hidden cursor-pointer gallery-thumb shadow-sm" onclick="changeImage(this, 'https://images.pexels.com/photos/1743231/pexels-photo-1743231.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2')">
+                            <img src="https://images.pexels.com/photos/1743231/pexels-photo-1743231.jpeg?auto=compress&cs=tinysrgb&w=300" class="w-full h-full object-cover hover:scale-110 transition-transform duration-500">
+                        </div>
+                        <div class="h-24 md:h-32 rounded-2xl overflow-hidden cursor-pointer gallery-thumb shadow-sm" onclick="changeImage(this, 'https://images.pexels.com/photos/3634741/pexels-photo-3634741.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2')">
+                            <img src="https://images.pexels.com/photos/3634741/pexels-photo-3634741.jpeg?auto=compress&cs=tinysrgb&w=300" class="w-full h-full object-cover hover:scale-110 transition-transform duration-500">
+                        </div>
+                        <div class="h-24 md:h-32 rounded-2xl overflow-hidden cursor-pointer gallery-thumb shadow-sm" onclick="changeImage(this, 'https://images.pexels.com/photos/1080696/pexels-photo-1080696.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2')">
+                            <img src="https://images.pexels.com/photos/1080696/pexels-photo-1080696.jpeg?auto=compress&cs=tinysrgb&w=300" class="w-full h-full object-cover hover:scale-110 transition-transform duration-500">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right: Booking Card (4 cols) -->
+                <div class="lg:col-span-4 animate-slide-up" style="animation-delay: 0.3s;">
+                    <div class="bg-white p-8 rounded-[2rem] shadow-glass sticky top-32 border border-gray-100/50">
+                        <!-- CORRECCIÓN 2: Eliminado precio, añadido nombre habitación -->
+                        <div class="mb-4">
+                            <h3 class="text-3xl font-serif text-brand-black leading-tight">Classic Petite Room</h3>
+                        </div>
+                        
+                        <hr class="border-gray-100 my-6">
+
+                        <p class="text-gray-500 mb-8 leading-relaxed text-sm">
+                            Our Classic Petite room offers a cozy and efficient layout perfect for solo travelers or students. Enjoy all the essential amenities in a compact, well-designed space in the heart of the city.
+                        </p>
+
+                        <div class="space-y-4">
+                            <a href="contact.html" class="btn-primary w-full h-12 rounded-full flex items-center justify-center text-sm font-bold uppercase tracking-widest shadow-lg hover:shadow-xl transition-all">
+                                inquiries contact us
+                            </a>
+                        </div>
+                        
+                        <div class="mt-8 pt-6 border-t border-gray-100 flex items-center justify-center gap-2 text-xs text-gray-400">
+                            <i data-lucide="shield-check" class="w-4 h-4 text-brand-gold"></i>
+                            <span>Best rate guaranteed</span>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- 3. AMENITIES SECTION (Dark Theme based on reference) -->
+    <section class="bg-[#14261C] py-24 px-6 text-white relative overflow-hidden rounded-t-[3rem] mt-12">
+        <!-- Decorative bg blur -->
+        <div class="absolute top-0 right-0 w-[500px] h-[500px] bg-brand-gold/5 rounded-full blur-[120px] pointer-events-none"></div>
+        
+        <div class="max-w-[1400px] mx-auto relative z-10">
+            <div class="text-center mb-16 animate-slide-up">
+                <h2 class="text-4xl md:text-5xl font-serif mb-6">Classic Petite Amenities</h2>
+                <p class="text-gray-400 max-w-2xl mx-auto font-light leading-relaxed">
+                    Immerse yourself in the comfort of our Classic Petite long stay suite, designed to meet all your needs during extended stays. With a modern and welcoming design, every detail has been carefully selected to ensure your comfort and well-being.
+                </p>
+            </div>
+
+            <!-- BENTO GRID LAYOUT -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6 animate-slide-up max-w-5xl mx-auto" style="animation-delay: 0.2s;">
+                
+                <!-- Item 1: Twin Bed (Wide) -->
+                <div class="md:col-span-2 amenity-card p-8 rounded-3xl flex flex-row items-center justify-start gap-6 h-48 group">
+                    <div class="w-16 h-16 rounded-2xl bg-white/5 flex items-center justify-center group-hover:bg-brand-gold/20 transition-colors">
+                        <i data-lucide="bed-single" class="w-8 h-8 text-brand-gold"></i>
+                    </div>
+                    <div class="text-left">
+                        <h3 class="text-2xl font-serif mb-1">Twin Bed</h3>
+                        <p class="text-gray-400 text-sm">Comfortable twin bed with premium linens.</p>
+                    </div>
+                </div>
+
+                <!-- Item 2: AC/Heating (Square) -->
+                <div class="md:col-span-1 amenity-card p-8 rounded-3xl flex flex-col items-center justify-center gap-4 text-center h-48 group">
+                    <div class="w-14 h-14 rounded-full bg-white/5 flex items-center justify-center group-hover:bg-brand-gold/20 transition-colors">
+                        <i data-lucide="thermometer-snowflake" class="w-7 h-7 text-brand-gold"></i>
+                    </div>
+                    <span class="font-medium tracking-wide text-lg">AC/Heating</span>
+                </div>
+
+                <!-- Item 3: Smart TV (Square) -->
+                <div class="md:col-span-1 amenity-card p-8 rounded-3xl flex flex-col items-center justify-center gap-4 text-center h-48 group">
+                    <div class="w-14 h-14 rounded-full bg-white/5 flex items-center justify-center group-hover:bg-brand-gold/20 transition-colors">
+                        <i data-lucide="tv" class="w-7 h-7 text-brand-gold"></i>
+                    </div>
+                    <span class="font-medium tracking-wide text-lg">Smart TV</span>
+                </div>
+
+                <!-- Item 4: Private Bath (Wide) -->
+                <div class="md:col-span-2 amenity-card p-8 rounded-3xl flex flex-row items-center justify-start gap-6 h-48 group text-left">
+                    <div class="w-16 h-16 rounded-2xl bg-white/5 flex items-center justify-center group-hover:bg-brand-gold/20 transition-colors">
+                        <i data-lucide="bath" class="w-8 h-8 text-brand-gold"></i>
+                    </div>
+                    <div>
+                        <h3 class="text-2xl font-serif mb-1">Private bathroom with bathtub</h3>
+                        <p class="text-gray-400 text-sm">Private bathroom with full bathtub.</p>
+                    </div>
+                </div>
+
+            </div>
+            
+            <div class="mt-16 text-center">
+                <!-- CORRECCIÓN 3: Cambiado texto del botón + ICONO FLECHA -->
+                <a href="gallery.html" class="inline-flex items-center justify-center px-12 py-4 border border-brand-gold text-brand-gold rounded-full hover:bg-brand-gold hover:text-white transition-all duration-300 uppercase tracking-widest font-bold text-sm group">
+                    See Classic Economy Room
+                    <i data-lucide="arrow-right" class="ml-2 w-4 h-4 transition-transform group-hover:translate-x-1"></i>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER (Same as gallery.html) -->
+    <footer id="contact" class="!bg-white !border-t !border-gray-100 !pt-24 !pb-12">
+        <div class="max-w-[1400px] mx-auto px-6">
+            <div class="flex flex-col lg:flex-row justify-between items-start gap-16 mb-20">
+                <div class="max-w-sm">
+                    <a href="index.html" class="flex items-center gap-2 group mb-6">
+                        <div class="w-10 h-10 bg-brand-black text-white flex items-center justify-center font-sans text-xl italic rounded-xl">C</div>
+                        <span class="text-display text-2xl font-bold tracking-tighter !text-brand-black">
+                            central<span class="font-light">park</span>.
+                        </span>
+                    </a>
+                    <p class="!text-gray-500 text-sm leading-relaxed mb-8">
+                        Redefining the 'Extended Stay' concept in New York. Choose your dates easily and enjoy a seamless relocation experience with total comfort in Manhattan's best location.
+                    </p>
+                    <div class="flex gap-4">
+                        <a href="#" class="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center !text-brand-black hover:bg-brand-black hover:!text-white transition-all"><i data-lucide="instagram" class="w-4 h-4"></i></a>
+                        <a href="#" class="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center !text-brand-black hover:bg-brand-black hover:!text-white transition-all"><i data-lucide="facebook" class="w-4 h-4"></i></a>
+                        <a href="#" class="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center !text-brand-black hover:bg-brand-black hover:!text-white transition-all"><i data-lucide="mail" class="w-4 h-4"></i></a>
+                    </div>
+                </div>
+                
+                <div class="grid grid-cols-2 md:grid-cols-3 gap-16 lg:gap-24">
+                    <div>
+                        <h4 class="text-xs font-bold uppercase tracking-widest mb-8 !text-brand-black">Contact</h4>
+                        <ul class="space-y-4 text-sm !text-gray-500 font-medium">
+                            <li>19 West 103rd Street,<br>New York, NY 10025</li>
+                            <li><a href="tel:+12126780491" class="!text-gray-500 hover:!text-brand-black transition-colors">+1 (212) 678-0491</a></li>
+                            <li><a href="mailto:info@centralparkinn.com" class="!text-gray-500 hover:!text-brand-black transition-colors">info@centralparkinn.com</a></li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 class="text-xs font-bold uppercase tracking-widest mb-8 !text-brand-black">Links</h4>
+                        <ul class="space-y-4 text-sm !text-gray-500 font-medium">
+                            <li><a href="index.html" class="!text-gray-500 hover:!text-brand-black transition-colors">Home</a></li>
+                            <li><a href="gallery.html" class="!text-gray-500 hover:!text-brand-black transition-colors">Accommodations</a></li>
+                            <li><a href="photos.html" class="!text-gray-500 hover:!text-brand-black transition-colors">Gallery</a></li>
+                            <li><a href="contact.html" class="!text-gray-500 hover:!text-brand-black transition-colors">Contact</a></li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 class="text-xs font-bold uppercase tracking-widest mb-8 !text-brand-black">Legal</h4>
+                        <ul class="space-y-4 text-sm !text-gray-500 font-medium">
+                            <li><a href="#" class="!text-gray-500 hover:!text-brand-black transition-colors">Terms</a></li>
+                            <li><a href="#" class="!text-gray-500 hover:!text-brand-black transition-colors">Privacy</a></li>
+                            <li><a href="#" class="!text-gray-500 hover:!text-brand-black transition-colors">Cookies</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-100 pt-8 flex flex-col md:flex-row justify-between items-center text-xs !text-gray-400 font-medium gap-4">
+                <p>&copy; 2026 Central Park Apartments NYC. All rights reserved.</p>
+                <div class="flex gap-6">
+                    <span class="!text-gray-400">Designed by Ciberfy Development</span>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- LOGIC -->
+    <script>
+        lucide.createIcons();
+        const navbar = document.getElementById('navbar');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                navbar.classList.add('nav-scrolled');
+            } else {
+                navbar.classList.remove('nav-scrolled');
+            }
+        });
+
+        // Toggle Mobile Menu
+        function toggleMenu() {
+            const menu = document.getElementById('mobile-menu');
+            const toggleBtn = document.getElementById('menu-toggle');
+            if (menu.classList.contains('hidden-menu')) {
+                menu.classList.remove('hidden-menu');
+                menu.classList.add('visible-menu');
+                toggleBtn.innerHTML = '<i data-lucide="x" class="w-5 h-5"></i>';
+                lucide.createIcons();
+            } else {
+                menu.classList.remove('visible-menu');
+                menu.classList.add('hidden-menu');
+                toggleBtn.innerHTML = '<i data-lucide="menu" class="w-5 h-5"></i>';
+                lucide.createIcons();
+            }
+        }
+
+        document.getElementById('menu-toggle').addEventListener('click', toggleMenu);
+
+        // Image Gallery Logic
+        function changeImage(element, src) {
+            // Update main image source
+            const mainImage = document.getElementById('main-image');
+            
+            // Fade out effect
+            mainImage.style.opacity = '0.8';
+            
+            setTimeout(() => {
+                mainImage.src = src;
+                mainImage.style.opacity = '1';
+            }, 200);
+
+            // Update active state class
+            document.querySelectorAll('.gallery-thumb').forEach(thumb => {
+                thumb.classList.remove('active-thumb');
+            });
+            element.classList.add('active-thumb');
+        }
+
+    </script>
+</body>
+</html>
