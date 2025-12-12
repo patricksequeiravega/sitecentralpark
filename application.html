@@ -1,0 +1,616 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Booking Process | Central Park Apartments NYC</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <!-- Tailwind Configuration -->
+    <script>
+        tailwind.config = {
+            important: true, 
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Manrope', 'sans-serif'], 
+                        display: ['Manrope', 'sans-serif'], 
+                        serif: ['Manrope', 'sans-serif'],
+                        poppins: ['Poppins', 'sans-serif'], 
+                    },
+                    colors: {
+                        brand: {
+                            black: '#0F0F0F', 
+                            gold: '#00d89d',  /* Teal/Green Brand Color */
+                            cream: '#F5F5F2', 
+                            darkGreen: '#14261C', 
+                            surface: '#FFFFFF',
+                            gray: '#F9FAFB'
+                        }
+                    },
+                    borderRadius: {
+                        'super': '2rem', 
+                        'pill': '9999px',
+                        'card': '1.5rem'
+                    },
+                    boxShadow: {
+                        'soft': '0 20px 40px -10px rgba(0, 0, 0, 0.05)',
+                        'glass': '0 8px 32px 0 rgba(31, 38, 135, 0.07)',
+                        'card': '0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03)',
+                    },
+                    animation: {
+                        'fade-in': 'fadeIn 0.6s ease-out forwards',
+                        'slide-up': 'slideUp 0.6s ease-out forwards',
+                    },
+                    keyframes: {
+                        fadeIn: {
+                            '0%': { opacity: '0' },
+                            '100%': { opacity: '1' },
+                        },
+                        slideUp: {
+                            '0%': { opacity: '0', transform: 'translateY(20px)' },
+                            '100%': { opacity: '1', transform: 'translateY(0)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <style>
+        body { background-color: #F5F5F2 !important; color: #0F0F0F !important; }
+        
+        /* --- NAVBAR FLOTANTE (DARK GLASS) --- */
+        .nav-glass {
+            background-color: rgba(15, 15, 15, 0.4); 
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.15); 
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.15); 
+        }
+
+        .nav-scrolled .nav-glass {
+            background-color: rgba(15, 15, 15, 0.7); 
+            box-shadow: 0 10px 30px -10px rgba(0,0,0,0.3);
+            border-color: rgba(255, 255, 255, 0.1);
+        }
+
+        .nav-link {
+            position: relative;
+            font-weight: 600;
+            color: #FFFFFF !important; 
+            transition: color 0.3s ease;
+        }
+        
+        .nav-link.active::after, .nav-link:hover::after {
+            width: 20px;
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 50%;
+            width: 0;
+            height: 2px;
+            background-color: #00d89d; 
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            transform: translateX(-50%);
+        }
+
+        /* --- MEGA MENU --- */
+        .mega-menu-content {
+            transform-origin: top center;
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        
+        .mega-menu-trigger:hover .mega-menu-content {
+            opacity: 1 !important;
+            visibility: visible !important;
+            transform: translate(-50%, 0) scale(1) !important;
+        }
+
+        .mega-menu-glass {
+            background-color: rgba(255, 255, 255, 0.95); 
+            backdrop-filter: blur(40px); 
+            border: 1px solid rgba(0, 0, 0, 0.05); 
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        }
+
+        /* --- BUTTONS --- */
+        .btn-primary {
+            background-color: #00d89d !important; 
+            color: white;
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            border: 1px solid transparent;
+        }
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            background-color: #00c48f !important;
+            box-shadow: 0 10px 20px -5px rgba(0, 216, 157, 0.4); 
+            filter: brightness(1.1); 
+        }
+
+        /* --- FORM ELEMENTS --- */
+        .form-input {
+            width: 100%;
+            background-color: white;
+            border: 1px solid #e5e7eb;
+            border-radius: 0.75rem;
+            padding: 1rem 1.25rem;
+            transition: all 0.3s ease;
+            outline: none;
+            color: #0F0F0F;
+        }
+        .form-input:focus {
+            border-color: #00d89d;
+            box-shadow: 0 0 0 4px rgba(0, 216, 157, 0.1);
+        }
+
+        /* File Upload Zone */
+        .file-drop-zone {
+            border: 2px dashed #d1d5db;
+            transition: all 0.3s ease;
+            background-image: url("data:image/svg+xml,%3csvg width='100%25' height='100%25' xmlns='http://www.w3.org/2000/svg'%3e%3crect width='100%25' height='100%25' fill='none' rx='16' ry='16' stroke='%23D1D5DBFF' stroke-width='2' stroke-dasharray='12%2c 12' stroke-dashoffset='0' stroke-linecap='square'/%3e%3c/svg%3e");
+        }
+        .file-drop-zone:hover, .file-drop-zone.drag-over {
+            border-color: #00d89d;
+            background-color: rgba(0, 216, 157, 0.03);
+            background-image: url("data:image/svg+xml,%3csvg width='100%25' height='100%25' xmlns='http://www.w3.org/2000/svg'%3e%3crect width='100%25' height='100%25' fill='none' rx='16' ry='16' stroke='%2300D89DFF' stroke-width='2' stroke-dasharray='12%2c 12' stroke-dashoffset='0' stroke-linecap='square'/%3e%3c/svg%3e");
+        }
+
+        /* Mobile Menu */
+        #mobile-menu {
+            transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.5s ease;
+        }
+        #mobile-menu.hidden-menu {
+            transform: translateY(-100%);
+            opacity: 0;
+            pointer-events: none;
+        }
+        #mobile-menu.visible-menu {
+            transform: translateY(0);
+            opacity: 1;
+            pointer-events: auto;
+        }
+    </style>
+</head>
+<body class="font-sans text-brand-black antialiased selection:bg-brand-gold selection:text-white">
+
+    <!-- NAV -->
+    <nav id="navbar" class="fixed w-full z-50 top-0 pt-8 transition-all duration-500">
+        <div class="max-w-7xl mx-auto px-4 lg:px-8">
+            <div class="nav-glass rounded-full px-4 py-3 flex justify-between items-center w-full max-w-5xl mx-auto relative z-50">
+                <!-- Logo -->
+                <a href="index.html" class="flex items-center gap-2 group relative px-2">
+                    <div class="w-10 h-10 bg-white text-brand-black flex items-center justify-center font-sans text-lg italic rounded-full shadow-lg transition-colors">C</div>
+                    <span class="text-display text-2xl font-bold tracking-tighter text-white">
+                        central<span class="font-light text-gray-400 group-hover:text-white transition-colors">park</span>.
+                    </span>
+                </a>
+
+                <!-- Desktop Menu -->
+                <div class="hidden lg:flex items-center gap-2">
+                    <a href="index.html" class="nav-link px-4 py-2 rounded-full text-base text-white hover:bg-white/10">Home</a>
+                    <!-- MEGA MENU -->
+                    <div class="relative group mega-menu-trigger h-full">
+                        <a href="#" class="nav-link px-4 py-2 rounded-full text-base text-white hover:bg-white/10 flex items-center gap-1.5 cursor-pointer">
+                            Accommodations <i data-lucide="chevron-down" class="w-3.5 h-3.5 opacity-70 group-hover:rotate-180 transition-transform"></i>
+                        </a>
+                        <div class="mega-menu-content absolute top-full left-1/2 -translate-x-1/2 pt-8 w-[800px] opacity-0 invisible transform -translate-y-4 scale-95 origin-top z-50 font-poppins">
+                            <div class="mega-menu-glass rounded-[2rem] p-8 relative overflow-hidden text-brand-black">
+                                <div class="flex justify-between items-center mb-8 border-b border-gray-100 pb-4">
+                                    <span class="text-xl font-medium font-poppins text-brand-black">Our Rooms</span>
+                                    <a href="#" class="text-sm font-bold text-brand-gold hover:text-brand-black transition-colors flex items-center gap-1">See all <i data-lucide="arrow-right" class="w-4 h-4"></i></a>
+                                </div>
+                                <div class="grid grid-cols-2 gap-3">
+                                    <!-- Full Mega Menu Items -->
+                                    <a href="#" class="flex items-start gap-4 p-3 rounded-2xl hover:bg-gray-50 transition-all duration-300 group/item border border-transparent hover:border-gray-200">
+                                        <div class="w-24 h-20 rounded-xl overflow-hidden bg-gray-100 flex-shrink-0">
+                                            <img src="https://ciberfycr.com/wp-content/uploads/2025/12/506-1-NUEVA.png" class="w-full h-full object-cover group-hover/item:scale-110 transition-transform duration-500">
+                                        </div>
+                                        <div>
+                                            <h4 class="font-medium text-lg text-brand-black mb-1">Classic Petite Room</h4>
+                                            <p class="text-xs text-gray-500 mb-2 line-clamp-2">Ideal for short or extended stays.</p>
+                                        </div>
+                                    </a>
+                                    <a href="#" class="flex items-start gap-4 p-3 rounded-2xl hover:bg-gray-50 transition-all duration-300 group/item border border-transparent hover:border-gray-200">
+                                        <div class="w-24 h-20 rounded-xl overflow-hidden bg-gray-100 flex-shrink-0">
+                                            <img src="https://ciberfycr.com/wp-content/uploads/2025/12/301-6-NUEVA.png" class="w-full h-full object-cover group-hover/item:scale-110 transition-transform duration-500">
+                                        </div>
+                                        <div>
+                                            <h4 class="font-medium text-lg text-brand-black mb-1">Classic Economy Room</h4>
+                                            <p class="text-xs text-gray-500 mb-2 line-clamp-2">Affordable, functional, and comfortable.</p>
+                                        </div>
+                                    </a>
+                                    <a href="#" class="flex items-start gap-4 p-3 rounded-2xl hover:bg-gray-50 transition-all duration-300 group/item border border-transparent hover:border-gray-200">
+                                        <div class="w-24 h-20 rounded-xl overflow-hidden bg-gray-100 flex-shrink-0">
+                                            <img src="https://ciberfycr.com/wp-content/uploads/2025/12/312-9-NUEVA.png" class="w-full h-full object-cover group-hover/item:scale-110 transition-transform duration-500">
+                                        </div>
+                                        <div>
+                                            <h4 class="font-medium text-lg text-brand-black mb-1">Full Classic Room</h4>
+                                            <p class="text-xs text-gray-500 mb-2 line-clamp-2">Efficient layouts that maximize space.</p>
+                                        </div>
+                                    </a>
+                                    <a href="#" class="flex items-start gap-4 p-3 rounded-2xl hover:bg-gray-50 transition-all duration-300 group/item border border-transparent hover:border-gray-200">
+                                        <div class="w-24 h-20 rounded-xl overflow-hidden bg-gray-100 flex-shrink-0">
+                                            <img src="https://ciberfycr.com/wp-content/uploads/2025/12/114-10-NUEVA.png" class="w-full h-full object-cover group-hover/item:scale-110 transition-transform duration-500">
+                                        </div>
+                                        <div>
+                                            <h4 class="font-medium text-lg text-brand-black mb-1">Classic Premium Room</h4>
+                                            <p class="text-xs text-gray-500 mb-2 line-clamp-2">A timeless and refined living experience.</p>
+                                        </div>
+                                    </a>
+                                    <a href="#" class="flex items-start gap-4 p-3 rounded-2xl hover:bg-gray-50 transition-all duration-300 group/item border border-transparent hover:border-gray-200">
+                                        <div class="w-24 h-20 rounded-xl overflow-hidden bg-gray-100 flex-shrink-0">
+                                            <img src="https://ciberfycr.com/wp-content/uploads/2025/12/401-9-NUEVAS-e1740089886141.png" class="w-full h-full object-cover group-hover/item:scale-110 transition-transform duration-500">
+                                        </div>
+                                        <div>
+                                            <h4 class="font-medium text-lg text-brand-black mb-1">Superior Room</h4>
+                                            <p class="text-xs text-gray-500 mb-2 line-clamp-2">Higher standard than standard budget.</p>
+                                        </div>
+                                    </a>
+                                    <a href="#" class="flex items-start gap-4 p-3 rounded-2xl hover:bg-gray-50 transition-all duration-300 group/item border border-transparent hover:border-gray-200">
+                                        <div class="w-24 h-20 rounded-xl overflow-hidden bg-gray-100 flex-shrink-0">
+                                            <img src="https://ciberfycr.com/wp-content/uploads/2025/12/403-3-1-scaled-e1740089625651.jpg" class="w-full h-full object-cover group-hover/item:scale-110 transition-transform duration-500">
+                                        </div>
+                                        <div>
+                                            <h4 class="font-medium text-lg text-brand-black">The Grand Suite</h4>
+                                            <p class="text-xs text-gray-500 mb-2 line-clamp-2">Elegance and spaciousness.</p>
+                                        </div>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <a href="gallery.html" class="nav-link px-4 py-2 rounded-full text-base text-white hover:bg-white/10">Gallery</a>
+                    <a href="contact.html" class="nav-link px-4 py-2 rounded-full text-base text-white hover:bg-white/10">Contact</a>
+                </div>
+
+                <div class="hidden md:flex items-center gap-2 pr-1">
+                    <a href="tel:+12126780491" class="text-sm font-bold text-white hover:text-brand-gold transition-colors hidden xl:flex items-center gap-2 font-display tracking-tight px-4">
+                        <i data-lucide="phone" class="w-3 h-3"></i> +1 (212) 678-0491
+                    </a>
+                    <!-- Book Now Button (Active State Indication could be added if desired) -->
+                    <a href="booking.html" class="bg-brand-gold text-white h-12 px-9 flex items-center rounded-full text-xs font-display font-extrabold uppercase tracking-widest hover:brightness-110 transition-all shadow-[0_0_15px_rgba(255,255,255,0.3)] border-2 border-white/20">
+                        <span>Book Now</span>
+                    </a>
+                </div>
+                
+                <button id="menu-toggle" class="lg:hidden p-2 bg-white/10 rounded-full text-white relative hover:bg-white/20 transition-colors mr-1 z-50">
+                    <i data-lucide="menu" class="w-5 h-5"></i>
+                </button>
+            </div>
+        </div>
+        
+        <!-- MOBILE MENU -->
+        <div id="mobile-menu" class="fixed inset-0 bg-brand-black/95 backdrop-blur-xl z-40 hidden-menu flex flex-col justify-center items-center">
+            <div class="flex flex-col gap-6 text-center">
+                <a href="index.html" class="mobile-link text-3xl font-display font-bold text-white hover:text-brand-gold transition-colors" onclick="toggleMenu()">Home</a>
+                <a href="#" class="mobile-link text-3xl font-display font-bold text-white hover:text-brand-gold transition-colors" onclick="toggleMenu()">Accommodations</a>
+                <a href="gallery.html" class="mobile-link text-3xl font-display font-bold text-white hover:text-brand-gold transition-colors" onclick="toggleMenu()">Gallery</a>
+                <a href="contact.html" class="mobile-link text-3xl font-display font-bold text-white hover:text-brand-gold transition-colors" onclick="toggleMenu()">Contact</a>
+                <div class="h-px bg-white/10 w-24 mx-auto my-4"></div>
+                <a href="booking.html" class="btn-primary h-14 px-10 rounded-full text-lg font-bold uppercase tracking-widest flex items-center justify-center shadow-xl text-white mx-auto" onclick="toggleMenu()">Book Now</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 1. HERO SECTION (Simple & Clean) -->
+    <header class="relative p-[10px] w-full">
+        <div class="relative w-full h-[50vh] md:h-[60vh] rounded-[2rem] overflow-hidden shadow-2xl group bg-brand-darkGreen">
+            <!-- Background Image -->
+            <img src="https://ciberfycr.com/wp-content/uploads/2025/12/120101-1.png" alt="Booking Process" class="absolute inset-0 w-full h-full object-cover opacity-60 mix-blend-overlay">
+            
+            <div class="absolute inset-0 flex flex-col justify-center items-center text-center px-4 md:px-6 pt-16 md:pt-0">
+                <span class="text-brand-gold text-xs md:text-sm font-bold tracking-[0.2em] md:tracking-[0.3em] uppercase mb-2 md:mb-4 animate-fade-in">Start Your Journey</span>
+                <h1 class="font-serif font-medium text-4xl sm:text-5xl md:text-7xl text-white mb-4 md:mb-6 animate-fade-in tracking-tight delay-100 leading-tight">Booking Process</h1>
+                <p class="text-white/80 text-sm md:text-lg max-w-xs md:max-w-xl font-sans font-light animate-fade-in tracking-wide delay-200 leading-relaxed">
+                    Follow these simple steps to secure your new home in Central Park.
+                </p>
+            </div>
+        </div>
+    </header>
+
+    <!-- 2. HOW IT WORKS (Steps) -->
+    <section class="py-20 px-6 max-w-7xl mx-auto">
+        <div class="text-center mb-16">
+            <h2 class="text-4xl md:text-5xl font-serif text-brand-black mb-4">How it works:</h2>
+            <div class="w-24 h-1 bg-brand-gold mx-auto rounded-full"></div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            
+            <!-- Step 1 -->
+            <div class="bg-white rounded-card p-8 shadow-soft hover:shadow-lg transition-all duration-300 group hover:-translate-y-1 border border-transparent hover:border-brand-gold/20 flex flex-col items-center text-center h-full relative overflow-hidden">
+                <div class="w-16 h-16 bg-brand-gold/10 rounded-full flex items-center justify-center text-brand-gold mb-6 group-hover:bg-brand-gold group-hover:text-white transition-colors">
+                    <i data-lucide="file-down" class="w-8 h-8"></i>
+                </div>
+                <span class="text-xs font-bold text-gray-400 uppercase tracking-widest mb-2">Step 1</span>
+                <h3 class="text-xl font-bold text-brand-black mb-3">Rental Application</h3>
+                <p class="text-gray-500 text-sm leading-relaxed mb-6 flex-grow">
+                    Download and fill out the official application form to start the process.
+                </p>
+                <a href="#" class="w-full py-3 rounded-xl border-2 border-brand-gold text-brand-gold font-bold text-sm uppercase tracking-wide hover:bg-brand-gold hover:text-white transition-all flex items-center justify-center gap-2">
+                    <i data-lucide="download" class="w-4 h-4"></i> Application Form
+                </a>
+            </div>
+
+            <!-- Step 2 -->
+            <div class="bg-white rounded-card p-8 shadow-soft hover:shadow-lg transition-all duration-300 group hover:-translate-y-1 border border-transparent hover:border-brand-gold/20 flex flex-col items-center text-center h-full">
+                <div class="w-16 h-16 bg-brand-gold/10 rounded-full flex items-center justify-center text-brand-gold mb-6 group-hover:bg-brand-gold group-hover:text-white transition-colors">
+                    <i data-lucide="id-card" class="w-8 h-8"></i>
+                </div>
+                <span class="text-xs font-bold text-gray-400 uppercase tracking-widest mb-2">Step 2</span>
+                <h3 class="text-xl font-bold text-brand-black mb-3">Personal Identification</h3>
+                <p class="text-gray-500 text-sm leading-relaxed">
+                    Provide a clear copy of your valid ID or Passport for verification purposes.
+                </p>
+            </div>
+
+            <!-- Step 3 -->
+            <div class="bg-white rounded-card p-8 shadow-soft hover:shadow-lg transition-all duration-300 group hover:-translate-y-1 border border-transparent hover:border-brand-gold/20 flex flex-col items-center text-center h-full">
+                <div class="w-16 h-16 bg-brand-gold/10 rounded-full flex items-center justify-center text-brand-gold mb-6 group-hover:bg-brand-gold group-hover:text-white transition-colors">
+                    <i data-lucide="file-check-2" class="w-8 h-8"></i>
+                </div>
+                <span class="text-xs font-bold text-gray-400 uppercase tracking-widest mb-2">Step 3</span>
+                <h3 class="text-xl font-bold text-brand-black mb-3">Supporting Documents</h3>
+                <p class="text-gray-500 text-sm leading-relaxed">
+                    Proof of Employment (40x monthly rent) OR University Acceptance Letter + Guarantor Form.
+                </p>
+            </div>
+
+            <!-- Step 4 -->
+            <div class="bg-white rounded-card p-8 shadow-soft hover:shadow-lg transition-all duration-300 group hover:-translate-y-1 border border-transparent hover:border-brand-gold/20 flex flex-col items-center text-center h-full">
+                <div class="w-16 h-16 bg-brand-gold/10 rounded-full flex items-center justify-center text-brand-gold mb-6 group-hover:bg-brand-gold group-hover:text-white transition-colors">
+                    <i data-lucide="handshake" class="w-8 h-8"></i>
+                </div>
+                <span class="text-xs font-bold text-gray-400 uppercase tracking-widest mb-2">Step 4</span>
+                <h3 class="text-xl font-bold text-brand-black mb-3">Lease Agreement</h3>
+                <p class="text-gray-500 text-sm leading-relaxed">
+                    Once approved, we will send you the lease and rider agreement to be signed.
+                </p>
+            </div>
+
+            <!-- Step 5 -->
+            <div class="bg-white rounded-card p-8 shadow-soft hover:shadow-lg transition-all duration-300 group hover:-translate-y-1 border border-transparent hover:border-brand-gold/20 flex flex-col items-center text-center h-full">
+                <div class="w-16 h-16 bg-brand-gold/10 rounded-full flex items-center justify-center text-brand-gold mb-6 group-hover:bg-brand-gold group-hover:text-white transition-colors">
+                    <i data-lucide="circle-dollar-sign" class="w-8 h-8"></i>
+                </div>
+                <span class="text-xs font-bold text-gray-400 uppercase tracking-widest mb-2">Step 5</span>
+                <h3 class="text-xl font-bold text-brand-black mb-3">Deposit Payment</h3>
+                <p class="text-gray-500 text-sm leading-relaxed">
+                    $500 booking deposit for short stays. First and last month's rent for longer leases.
+                </p>
+            </div>
+
+            <!-- Step 6 -->
+            <div class="bg-white rounded-card p-8 shadow-soft hover:shadow-lg transition-all duration-300 group hover:-translate-y-1 border border-transparent hover:border-brand-gold/20 flex flex-col items-center text-center h-full">
+                <div class="w-16 h-16 bg-brand-gold/10 rounded-full flex items-center justify-center text-brand-gold mb-6 group-hover:bg-brand-gold group-hover:text-white transition-colors">
+                    <i data-lucide="package-open" class="w-8 h-8"></i>
+                </div>
+                <span class="text-xs font-bold text-gray-400 uppercase tracking-widest mb-2">Step 6</span>
+                <h3 class="text-xl font-bold text-brand-black mb-3">Move In</h3>
+                <p class="text-gray-500 text-sm leading-relaxed">
+                    You're all set! Collect your keys and welcome to your new home in NYC.
+                </p>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- 3. APPLICATION FORM -->
+    <section class="py-16 px-6 bg-white relative">
+        <div class="max-w-4xl mx-auto">
+            <div class="text-center mb-12">
+                <h2 class="text-4xl font-serif text-brand-black mb-4">Start your application now:</h2>
+                <p class="text-gray-500">Please fill out the details below and attach your required documents.</p>
+            </div>
+
+            <form class="space-y-8 animate-slide-up" onsubmit="event.preventDefault(); alert('Application submitted successfully!');">
+                
+                <!-- Name Row -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="space-y-2">
+                        <label class="text-sm font-bold text-brand-black uppercase tracking-wider ml-1">First Name</label>
+                        <input type="text" class="form-input" placeholder="Your Name" required>
+                    </div>
+                    <div class="space-y-2">
+                        <label class="text-sm font-bold text-brand-black uppercase tracking-wider ml-1">Last Name</label>
+                        <input type="text" class="form-input" placeholder="Your Last Name" required>
+                    </div>
+                </div>
+
+                <!-- Email -->
+                <div class="space-y-2">
+                    <label class="text-sm font-bold text-brand-black uppercase tracking-wider ml-1">Email Address</label>
+                    <input type="email" class="form-input" placeholder="name@example.com" required>
+                </div>
+
+                <!-- File Upload -->
+                <div class="space-y-2">
+                    <label class="text-sm font-bold text-brand-black uppercase tracking-wider ml-1">Upload Files</label>
+                    <div class="file-drop-zone rounded-3xl p-10 text-center cursor-pointer group" id="drop-zone">
+                        <input type="file" id="file-upload" class="hidden" multiple>
+                        <div class="flex flex-col items-center justify-center gap-3">
+                            <div class="w-12 h-12 bg-gray-100 rounded-full flex items-center justify-center text-gray-400 group-hover:text-brand-gold group-hover:bg-brand-gold/10 transition-colors">
+                                <i data-lucide="cloud-upload" class="w-6 h-6"></i>
+                            </div>
+                            <h4 class="text-lg font-medium text-brand-black">Click or drag files to this area to upload</h4>
+                            <p class="text-sm text-gray-400">You can upload up to 10 files (PDF, JPG, PNG)</p>
+                        </div>
+                    </div>
+                    <div id="file-list" class="mt-4 space-y-2"></div>
+                </div>
+
+                <!-- Subject/Message -->
+                <div class="space-y-2">
+                    <label class="text-sm font-bold text-brand-black uppercase tracking-wider ml-1">Subject / Notes</label>
+                    <textarea class="form-input h-32 resize-none" placeholder="Any additional details..."></textarea>
+                </div>
+
+                <!-- Submit -->
+                <button type="submit" class="btn-primary w-full md:w-auto px-12 py-4 rounded-full text-lg font-bold uppercase tracking-widest shadow-lg mx-auto block">
+                    Send Application
+                </button>
+                
+                <p class="text-center text-xs text-gray-400 mt-6 italic">
+                    Central Park Apartments reserves the right to deny any application at its discretion.
+                </p>
+
+            </form>
+        </div>
+    </section>
+
+    <!-- FOOTER (Same as Gallery) -->
+    <footer id="contact" class="bg-white border-t border-gray-100 pt-24 pb-12">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="flex flex-col lg:flex-row justify-between items-start gap-16 mb-20">
+                <div class="max-w-sm">
+                    <a href="index.html" class="flex items-center gap-2 group mb-6">
+                        <div class="w-10 h-10 bg-brand-black text-white flex items-center justify-center font-sans text-xl italic rounded-xl">C</div>
+                        <span class="text-display text-2xl font-bold tracking-tighter text-brand-black">
+                            central<span class="font-light">park</span>.
+                        </span>
+                    </a>
+                    <p class="text-gray-500 text-sm leading-relaxed mb-8">
+                        Redefining the 'Extended Stay' concept in New York. Choose your dates easily and enjoy a seamless relocation experience with total comfort in Manhattan's best location.
+                    </p>
+                    <div class="flex gap-4">
+                        <a href="#" class="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center hover:bg-brand-black hover:text-white transition-all"><i data-lucide="instagram" class="w-4 h-4"></i></a>
+                        <a href="#" class="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center hover:bg-brand-black hover:text-white transition-all"><i data-lucide="facebook" class="w-4 h-4"></i></a>
+                        <a href="#" class="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center hover:bg-brand-black hover:text-white transition-all"><i data-lucide="mail" class="w-4 h-4"></i></a>
+                    </div>
+                </div>
+                
+                <div class="grid grid-cols-2 md:grid-cols-3 gap-16 lg:gap-24">
+                    <div>
+                        <h4 class="text-xs font-bold uppercase tracking-widest mb-8 text-brand-black">Contact</h4>
+                        <ul class="space-y-4 text-sm text-gray-500 font-medium">
+                            <li>19 West 103rd Street,<br>New York, NY 10025</li>
+                            <li><a href="tel:+12126780491" class="hover:text-brand-black transition-colors">+1 (212) 678-0491</a></li>
+                            <li><a href="mailto:info@centralparkinn.com" class="hover:text-brand-black transition-colors">info@centralparkinn.com</a></li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 class="text-xs font-bold uppercase tracking-widest mb-8 text-brand-black">Links</h4>
+                        <ul class="space-y-4 text-sm text-gray-500 font-medium">
+                            <li><a href="index.html" class="hover:text-brand-black transition-colors">Home</a></li>
+                            <li><a href="#" class="hover:text-brand-black transition-colors">Accommodations</a></li>
+                            <li><a href="gallery.html" class="hover:text-brand-black transition-colors">Gallery</a></li>
+                            <li><a href="contact.html" class="hover:text-brand-black transition-colors">Contact</a></li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 class="text-xs font-bold uppercase tracking-widest mb-8 text-brand-black">Legal</h4>
+                        <ul class="space-y-4 text-sm text-gray-500 font-medium">
+                            <li><a href="#" class="hover:text-brand-black transition-colors">Terms</a></li>
+                            <li><a href="#" class="hover:text-brand-black transition-colors">Privacy</a></li>
+                            <li><a href="#" class="hover:text-brand-black transition-colors">Cookies</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-100 pt-8 flex flex-col md:flex-row justify-between items-center text-xs text-gray-400 font-medium gap-4">
+                <p>&copy; 2026 Central Park Apartments NYC. All rights reserved.</p>
+                <div class="flex gap-6">
+                    <span class="text-gray-400">Designed by Ciberfy Development</span>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- LOGIC -->
+    <script>
+        lucide.createIcons();
+        
+        // Navbar Scroll Effect
+        const navbar = document.getElementById('navbar');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                navbar.classList.add('nav-scrolled');
+            } else {
+                navbar.classList.remove('nav-scrolled');
+            }
+        });
+
+        // Toggle Mobile Menu
+        function toggleMenu() {
+            const menu = document.getElementById('mobile-menu');
+            const toggleBtn = document.getElementById('menu-toggle');
+            if (menu.classList.contains('hidden-menu')) {
+                menu.classList.remove('hidden-menu');
+                menu.classList.add('visible-menu');
+                toggleBtn.innerHTML = '<i data-lucide="x" class="w-5 h-5"></i>';
+                lucide.createIcons();
+            } else {
+                menu.classList.remove('visible-menu');
+                menu.classList.add('hidden-menu');
+                toggleBtn.innerHTML = '<i data-lucide="menu" class="w-5 h-5"></i>';
+                lucide.createIcons();
+            }
+        }
+        document.getElementById('menu-toggle').addEventListener('click', toggleMenu);
+
+        // File Upload Logic (Drag & Drop + Click)
+        const dropZone = document.getElementById('drop-zone');
+        const fileInput = document.getElementById('file-upload');
+        const fileList = document.getElementById('file-list');
+
+        dropZone.addEventListener('click', () => fileInput.click());
+
+        dropZone.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            dropZone.classList.add('drag-over');
+        });
+
+        dropZone.addEventListener('dragleave', () => {
+            dropZone.classList.remove('drag-over');
+        });
+
+        dropZone.addEventListener('drop', (e) => {
+            e.preventDefault();
+            dropZone.classList.remove('drag-over');
+            handleFiles(e.dataTransfer.files);
+        });
+
+        fileInput.addEventListener('change', () => {
+            handleFiles(fileInput.files);
+        });
+
+        function handleFiles(files) {
+            // Simple visual feedback for files
+            if (files.length > 0) {
+                for (let i = 0; i < files.length; i++) {
+                    const file = files[i];
+                    const fileItem = document.createElement('div');
+                    fileItem.className = 'flex items-center justify-between p-3 bg-gray-50 rounded-lg border border-gray-100';
+                    fileItem.innerHTML = `
+                        <div class="flex items-center gap-3">
+                            <i data-lucide="file" class="w-4 h-4 text-brand-gold"></i>
+                            <span class="text-sm font-medium text-brand-black">${file.name}</span>
+                        </div>
+                        <button type="button" class="text-red-400 hover:text-red-600" onclick="this.parentElement.remove()">
+                            <i data-lucide="trash-2" class="w-4 h-4"></i>
+                        </button>
+                    `;
+                    fileList.appendChild(fileItem);
+                }
+                lucide.createIcons();
+            }
+        }
+    </script>
+</body>
+</html>
